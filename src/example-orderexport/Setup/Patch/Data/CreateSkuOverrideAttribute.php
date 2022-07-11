@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+ * @by SwiftOtter, Inc.
+ * @website https://swiftotter.com
+ **/
 
 namespace SwiftOtter\OrderExport\Setup\Patch\Data;
 
@@ -10,8 +11,7 @@ use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 
-class CreateSkuOverrideAttribute implements
-    DataPatchInterface
+class CreateSkuOverrideAttribute implements DataPatchInterface
 {
     /**
      * @var ModuleDataSetupInterface $moduleDataSetup

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /**
- * @by SwiftOtter, Inc. 1/1/20
+ * @by SwiftOtter, Inc.
  * @website https://swiftotter.com
  **/
 

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /**
- * @by SwiftOtter, Inc. 12/31/19
+ * @by SwiftOtter, Inc.
  * @website https://swiftotter.com
  **/
 
@@ -41,14 +41,14 @@ class ItemData implements DataCollectorInterface
         ];
     }
 
-    private function transform(OrderItemInterface $orderItem)
+    private function transform(OrderItemInterface $orderItem): array
     {
         return [
             'sku' => $orderItem->getSku(),
             'qty' => $orderItem->getQtyOrdered(),
             'item_price' => $orderItem->getBasePrice(),
             'item_cost' => $orderItem->getBaseCost(),
-            'total' => $orderItem->getRowTotal()
+            'total' => $orderItem->getBaseRowTotal()
         ];
     }
 }

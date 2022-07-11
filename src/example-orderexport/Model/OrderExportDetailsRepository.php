@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /**
- * @by SwiftOtter, Inc. 12/31/19
+ * @by SwiftOtter, Inc.
  * @website https://swiftotter.com
  **/
 
@@ -13,10 +13,12 @@ use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsSearchResultsInterface;
-use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsSearchResultsInterfaceFactory as SearchResultsFactory;
+use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsSearchResultsInterfaceFactory as SearchResultsInterfaceFactory;
 use SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails as OrderExportDetailsResource;
 use SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails\Collection as OrderExportDetailsCollection;
 use SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails\CollectionFactory as DetailsCollectionFactory;
+use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface;
+use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterfaceFactory;
 
 class OrderExportDetailsRepository
 {
@@ -26,7 +28,7 @@ class OrderExportDetailsRepository
     private $resource;
 
     /**
-     * @var OrderExportDetailsFactory
+     * @var OrderExportDetailsInterfaceFactory
      */
     private $detailsFactory;
 
@@ -36,7 +38,7 @@ class OrderExportDetailsRepository
     private $collectionFactory;
 
     /**
-     * @var SearchResultsFactory
+     * @var SearchResultsInterfaceFactory
      */
     private $searchResultsFactory;
 
@@ -47,9 +49,9 @@ class OrderExportDetailsRepository
 
     public function __construct(
         OrderExportDetailsResource $resource,
-        OrderExportDetailsFactory $detailsFactory,
+        OrderExportDetailsInterfaceFactory $detailsFactory,
         DetailsCollectionFactory $collectionFactory,
-        SearchResultsFactory $searchResultsFactory,
+        SearchResultsInterfaceFactory $searchResultsFactory,
         CollectionProcessorInterface $collectionProcessor
     ) {
         $this->resource = $resource;
@@ -59,7 +61,10 @@ class OrderExportDetailsRepository
         $this->collectionProcessor = $collectionProcessor;
     }
 
-    public function save(OrderExportDetails $exportDetails)
+    /**
+     * @throws CouldNotSaveException
+     */
+    public function save(OrderExportDetailsInterface $exportDetails): OrderExportDetailsInterface
     {
         try {
             $this->resource->save($exportDetails);
@@ -69,7 +74,10 @@ class OrderExportDetailsRepository
         return $exportDetails;
     }
 
-    public function getById($detailsId)
+    /**
+     * @throws NoSuchEntityException
+     */
+    public function getById($detailsId): OrderExportDetailsInterface
     {
         $details = $this->detailsFactory->create();
         $this->resource->load($details, $detailsId);
@@ -80,7 +88,7 @@ class OrderExportDetailsRepository
         return $details;
     }
 
-    public function getList(SearchCriteriaInterface $criteria)
+    public function getList(SearchCriteriaInterface $criteria): OrderExportDetailsSearchResultsInterface
     {
         /** @var OrderExportDetailsCollection $collection */
         $collection = $this->collectionFactory->create();
@@ -95,7 +103,10 @@ class OrderExportDetailsRepository
         return $searchResults;
     }
 
-    public function delete(OrderExportDetails $exportDetails)
+    /**
+     * @throws CouldNotDeleteException
+     */
+    public function delete(OrderExportDetailsInterface $exportDetails): bool
     {
         try {
             $this->resource->delete($exportDetails);
@@ -106,7 +117,11 @@ class OrderExportDetailsRepository
         return true;
     }
 
-    public function deleteById($blockId)
+    /**
+     * @throws CouldNotDeleteException
+     * @throws NoSuchEntityException
+     */
+    public function deleteById($blockId): bool
     {
         return $this->delete($this->getById($blockId));
     }

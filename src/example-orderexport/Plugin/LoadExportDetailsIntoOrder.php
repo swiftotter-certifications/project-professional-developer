@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /**
- * @by SwiftOtter, Inc. 12/31/19
+ * @by SwiftOtter, Inc.
  * @website https://swiftotter.com
  **/
 
@@ -12,7 +12,8 @@ use Magento\Sales\Api\Data\OrderExtensionInterfaceFactory;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderSearchResultInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use SwiftOtter\OrderExport\Model\OrderExportDetailsFactory;
+use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface;
+use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterfaceFactory;
 use SwiftOtter\OrderExport\Model\OrderExportDetailsRepository;
 
 class LoadExportDetailsIntoOrder
@@ -33,7 +34,7 @@ class LoadExportDetailsIntoOrder
     private $orderExportDetailsRepository;
 
     /**
-     * @var OrderExportDetailsFactory
+     * @var OrderExportDetailsInterfaceFactory
      */
     private $detailsFactory;
 
@@ -41,7 +42,7 @@ class LoadExportDetailsIntoOrder
         OrderExtensionInterfaceFactory $extension,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         OrderExportDetailsRepository $orderExportDetailsRepository,
-        OrderExportDetailsFactory $detailsFactory
+        OrderExportDetailsInterfaceFactory $detailsFactory
     ) {
         $this->extensionFactory = $extension;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
@@ -80,7 +81,9 @@ class LoadExportDetailsIntoOrder
         if (count($details)) {
             $extensionAttributes->setExportDetails(reset($details));
         } else {
-            $extensionAttributes->setExportDetails($this->detailsFactory->create());
+            /** @var OrderExportDetailsInterface $details */
+            $details = $this->detailsFactory->create();
+            $extensionAttributes->setExportDetails($details);
         }
 
         $order->setExtensionAttributes($extensionAttributes);
