@@ -40,18 +40,4 @@
     <type name="Magento\Sales\Api\OrderRepositoryInterface">
         <plugin name="LoadExportDetailsIntoOrder" type="SwiftOtter\OrderExport\Plugin\LoadExportDetailsIntoOrder" />
     </type>
-
-    <!-- uncomment to send requests to the web api -->
-<!--    <type name="SwiftOtter\OrderExport\ViewModel\OrderDetails">-->
-<!--        <plugin name="InjectAdminToken" type="SwiftOtter\OrderExport\Plugin\InjectAdminToken" />-->
-<!--    </type>-->
-
-    <preference for="SwiftOtter\OrderExport\Api\Data\IncomingHeaderDataInterface"
-                type="SwiftOtter\OrderExport\Model\IncomingHeaderData" />
-
-    <preference for="SwiftOtter\OrderExport\Api\ExportInterface"
-                type="SwiftOtter\OrderExport\Model\Endpoint\Export" />
-
-    <preference for="SwiftOtter\OrderExport\Api\Data\ResponseInterface"
-                type="SwiftOtter\OrderExport\Model\ResponseDetails" />
 </config>
