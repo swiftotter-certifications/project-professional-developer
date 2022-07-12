@@ -1,0 +1,45 @@
+<?php
+/**
+ * @by SwiftOtter, Inc.
+ * @website https://swiftotter.com
+ **/
+
+/** @var \Magento\Framework\View\Element\Template $block */
+
+/** @var \SwiftOtter\OrderExport\ViewModel\OrderExportView $viewModel */
+$viewModel = $block->getData('view_model');
+$exportDetails = $viewModel->getOrderExportDetails();
+?>
+<p class="back-link">
+    <a href="<?= $viewModel->getOrderViewUrl() ?>">Back to Order</a>
+</p>
+
+<?php if ($exportDetails === null || !$exportDetails->getId()): ?>
+
+<p class="no-results">
+    <?= __('No details found') ?>
+</p>
+
+<?php else: ?>
+
+<table class="order-export-details">
+    <thead>
+        <tr>
+            <th><?= __('Shipping On') ?></th>
+            <th><?= __('Merchant Notes') ?></th>
+            <th><?= __('Exported') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <?php
+            $shipOn = $exportDetails->getShipOn();
+            ?>
+            <td><?= ($shipOn) ? 'date' : '' ?></td>
+            <td><?= $exportDetails->getMerchantNotes() ?? '' ?></td>
+            <td><?= ($exportDetails->hasBeenExported()) ? __('Yes') : __('No') ?></td>
+        </tr>
+    </tbody>
+</table>
+
+<?php endif; ?>

@@ -13,8 +13,14 @@ use Magento\Framework\View\Element\Block\ArgumentInterface;
 
 class OrderExportLink implements ArgumentInterface
 {
-    private RequestInterface $request;
-    private UrlInterface $urlBuilder;
+    /**
+     * @var RequestInterface
+     */
+    private $request;
+    /**
+     * @var UrlInterface
+     */
+    private $urlBuilder;
 
     public function __construct(
         RequestInterface $request,
