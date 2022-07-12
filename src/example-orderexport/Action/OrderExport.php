@@ -5,15 +5,12 @@ declare(strict_types=1);
  * @website https://swiftotter.com
  **/
 
-namespace SwiftOtter\OrderExport;
+namespace SwiftOtter\OrderExport\Action;
 
-use SwiftOtter\OrderExport\Action\PushDetailsToWebservice;
-use SwiftOtter\OrderExport\Action\SaveExportDetailsToOrder;
-use SwiftOtter\OrderExport\Action\TransformOrderToArray;
 use SwiftOtter\OrderExport\Model\HeaderData;
 use SwiftOtter\OrderExport\Model\RequestValidator;
 
-class Orchestrator
+class OrderExport
 {
     /** @var TransformOrderToArray */
     private $orderToArray;

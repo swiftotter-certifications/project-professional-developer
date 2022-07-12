@@ -42,4 +42,12 @@
     <type name="Magento\Sales\Api\OrderRepositoryInterface">
         <plugin name="LoadExportDetailsIntoOrder" type="SwiftOtter\OrderExport\Plugin\LoadExportDetailsIntoOrder" />
     </type>
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="orderExportRun" xsi:type="object">SwiftOtter\OrderExport\Console\Command\OrderExport</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
