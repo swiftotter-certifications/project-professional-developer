@@ -21,7 +21,7 @@ interface OrderExportDetailsSearchResultsInterface extends SearchResultsInterfac
     /**
      * Set details list.
      *
-     * @param [] $items
+     * @param \SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface[] $items
      * @return $this
      */
     public function setItems(array $items);

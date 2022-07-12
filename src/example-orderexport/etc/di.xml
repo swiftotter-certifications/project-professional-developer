@@ -19,8 +19,10 @@
         </arguments>
     </type>
 
+    <preference for="SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface"
+                type="SwiftOtter\OrderExport\Model\OrderExportDetails" />
     <preference for="SwiftOtter\OrderExport\Api\Data\OrderExportDetailsSearchResultsInterface"
-                type="Magento\Framework\Api\SearchResults" />
+                type="SwiftOtter\OrderExport\Model\OrderExportDetailsSearchResults" />
 
     <virtualType name="SwiftOtter\OrderExport\Model\Api\SearchCriteria\DetailsCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
         <arguments>
