@@ -28,9 +28,10 @@ class OrderExportDetails extends AbstractModel implements OrderExportDetailsInte
         return $this;
     }
 
-    public function getShipOn(): \DateTime
+    public function getShipOn(): ?\DateTime
     {
-        return new \DateTime($this->getData('ship_on'));
+        $dateStr = $this->getData('ship_on');
+        return ($dateStr) ? new \DateTime($dateStr) : null;
     }
 
     public function setShipOn(\DateTime $shipOn): OrderExportDetailsInterface

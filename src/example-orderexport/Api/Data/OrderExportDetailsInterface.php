@@ -15,7 +15,7 @@ interface OrderExportDetailsInterface
 
     public function setOrderId(int $orderId): OrderExportDetailsInterface;
 
-    public function getShipOn(): \DateTime;
+    public function getShipOn(): ?\DateTime;
 
     public function setShipOn(\DateTime $shipOn): OrderExportDetailsInterface;
 
