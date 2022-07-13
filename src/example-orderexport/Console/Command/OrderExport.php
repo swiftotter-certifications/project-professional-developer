@@ -18,6 +18,7 @@ use SwiftOtter\OrderExport\Model\HeaderData;
 use SwiftOtter\OrderExport\Model\HeaderDataFactory;
 use SwiftOtter\OrderExport\Action\OrderExport as OrderExportAction;
 use Magento\Sales\Api\Data\OrderInterface;
+use SwiftOtter\OrderExport\Model\Config;
 
 class OrderExport extends Command
 {
@@ -41,12 +42,17 @@ class OrderExport extends Command
      * @var OrderExportAction
      */
     private $orderExport;
+    /**
+     * @var Config
+     */
+    private $config;
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         HeaderDataFactory $headerDataFactory,
         OrderExportAction $orderExport,
+        Config $config,
         string $name = null
     ) {
         parent::__construct($name);
@@ -54,6 +60,7 @@ class OrderExport extends Command
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->headerDataFactory = $headerDataFactory;
         $this->orderExport = $orderExport;
+        $this->config = $config;
     }
 
     /**
