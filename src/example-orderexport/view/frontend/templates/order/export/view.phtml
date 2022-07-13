@@ -35,7 +35,7 @@ $exportDetails = $viewModel->getOrderExportDetails();
             <?php
             $shipOn = $exportDetails->getShipOn();
             ?>
-            <td><?= ($shipOn) ? 'date' : '' ?></td>
+            <td><?= ($shipOn) ? $viewModel->formatDate($shipOn) : '' ?></td>
             <td><?= $exportDetails->getMerchantNotes() ?? '' ?></td>
             <td><?= ($exportDetails->hasBeenExported()) ? __('Yes') : __('No') ?></td>
         </tr>

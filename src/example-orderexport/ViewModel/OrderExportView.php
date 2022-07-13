@@ -9,6 +9,7 @@ namespace SwiftOtter\OrderExport\ViewModel;
 
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Sales\Api\Data\OrderInterface;
@@ -39,22 +40,33 @@ class OrderExportView implements ArgumentInterface
      * @var UrlInterface
      */
     private $urlBuilder;
+    /**
+     * @var TimezoneInterface
+     */
+    private $localeDate;
 
     public function __construct(
         RequestInterface $request,
         OrderRepositoryInterface $orderRepository,
         PageConfig $pageConfig,
-        UrlInterface $urlBuilder
+        UrlInterface $urlBuilder,
+        TimezoneInterface $localeDate
     ) {
         $this->request = $request;
         $this->orderRepository = $orderRepository;
         $this->pageConfig = $pageConfig;
+        $this->urlBuilder = $urlBuilder;
+        $this->localeDate = $localeDate;
 
         $order = $this->getOrder();
         if ($order !== null) {
             $this->pageConfig->getTitle()->set(__('Order # %1 Export Details', $order->getIncrementId()));
         }
-        $this->urlBuilder = $urlBuilder;
+    }
+
+    public function formatDate(\DateTime $date): string
+    {
+        return $this->localeDate->formatDate($date, \IntlDateFormatter::LONG);
     }
 
     public function getOrderViewUrl(): string
