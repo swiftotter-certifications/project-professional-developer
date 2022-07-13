@@ -1,0 +1,15 @@
+{
+    "name": "swiftotter/theme-professional",
+    "description": "",
+    "type": "magento2-theme",
+    "require": {
+        "magento/framework": "^103",
+        "magento/theme-frontend-luma": "^100"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ]
+    }
+}
+
