@@ -9,6 +9,7 @@
 /** @var \SwiftOtter\OrderExport\ViewModel\OrderExportView $viewModel */
 $viewModel = $block->getData('view_model');
 $exportDetails = $viewModel->getOrderExportDetails();
+$shipOn = $exportDetails->getShipOn();
 ?>
 <p class="back-link">
     <a href="<?= $viewModel->getOrderViewUrl() ?>">Back to Order</a>
@@ -22,24 +23,15 @@ $exportDetails = $viewModel->getOrderExportDetails();
 
 <?php else: ?>
 
-<table class="order-export-details">
-    <thead>
-        <tr>
-            <th><?= __('Shipping On') ?></th>
-            <th><?= __('Merchant Notes') ?></th>
-            <th><?= __('Exported') ?></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <?php
-            $shipOn = $exportDetails->getShipOn();
-            ?>
-            <td><?= ($shipOn) ? $viewModel->formatDate($shipOn) : '' ?></td>
-            <td><?= $exportDetails->getMerchantNotes() ?? '' ?></td>
-            <td><?= ($exportDetails->hasBeenExported()) ? __('Yes') : __('No') ?></td>
-        </tr>
-    </tbody>
-</table>
+<dl class="order-export-details">
+    <dt><?= __('Shipping On') ?></dt>
+    <dd><?= ($shipOn) ? $viewModel->formatDate($shipOn) : '' ?></dd>
+
+    <dt><?= __('Merchant Notes') ?></dt>
+    <dd><?= $exportDetails->getMerchantNotes() ?? '' ?></dd>
+
+    <dt><?= __('Exported') ?></dt>
+    <dd><?= ($exportDetails->hasBeenExported()) ? __('Yes') : __('No') ?></dd>
+</dl>
 
 <?php endif; ?>
