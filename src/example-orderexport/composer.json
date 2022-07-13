@@ -3,7 +3,10 @@
     "description": "",
     "type": "magento2-module",
     "require": {
-        "magento/framework": "^103"
+        "magento/framework": "^103",
+        "magento/module-checkout": "^100",
+        "magento/module-cms": "^104",
+        "swiftotter/module-fulfillment-block": "*"
     },
     "autoload": {
         "files": [
