@@ -9,30 +9,28 @@ namespace SwiftOtter\OrderExport\Collector;
 
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderItemInterface;
+use SwiftOtter\OrderExport\Action\GetOrderExportItems;
 use SwiftOtter\OrderExport\Api\DataCollectorInterface;
 use SwiftOtter\OrderExport\Model\HeaderData;
 
 class ItemData implements DataCollectorInterface
 {
     /**
-     * @var array
+     * @var GetOrderExportItems
      */
-    private $allowedTypes;
+    private $getOrderExportItems;
 
-    public function __construct(array $allowedTypes)
-    {
-        $this->allowedTypes = $allowedTypes;
+    public function __construct(
+        GetOrderExportItems $getOrderExportItems
+    ) {
+        $this->getOrderExportItems = $getOrderExportItems;
     }
 
     public function collect(OrderInterface $order, HeaderData $headerData): array
     {
         $items = [];
 
-        foreach ($order->getItems() as $item) {
-            if (!in_array($item->getProductType(), $this->allowedTypes)) {
-                continue;
-            }
-
+        foreach ($this->getOrderExportItems->execute($order) as $item) {
             $items[] = $this->transform($item);
         }
 
