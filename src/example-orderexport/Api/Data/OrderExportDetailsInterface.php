@@ -28,4 +28,8 @@ interface OrderExportDetailsInterface
     public function setMerchantNotes(string $merchantNotes): OrderExportDetailsInterface;
 
     public function hasBeenExported(): bool;
+
+    public function getArchived(): bool;
+
+    public function setArchived(bool $archived): OrderExportDetailsInterface;
 }

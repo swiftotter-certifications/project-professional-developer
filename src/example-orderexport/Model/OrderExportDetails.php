@@ -66,4 +66,15 @@ class OrderExportDetails extends AbstractModel implements OrderExportDetailsInte
         $this->setData('merchant_notes', $merchantNotes);
         return $this;
     }
+
+    public function getArchived(): bool
+    {
+        return (bool)$this->getData('archived');
+    }
+
+    public function setArchived(bool $archived): OrderExportDetailsInterface
+    {
+        $this->setData('archived', ($archived) ? 1 : 0);
+        return $this;
+    }
 }
