@@ -5,17 +5,16 @@ declare(strict_types=1);
  * @website https://swiftotter.com
  **/
 
-namespace SwiftOtter\OrderExport\Collector;
+namespace SwiftOtter\OrderExport\Action\OrderDataCollector;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Sales\Api\Data\OrderAddressInterface;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\OrderAddressRepositoryInterface;
-use Magento\Store\Model\ScopeInterface;
-use SwiftOtter\OrderExport\Api\DataCollectorInterface;
+use SwiftOtter\OrderExport\Api\OrderDataCollectorInterface;
 
-class HeaderData implements DataCollectorInterface
+class HeaderData implements OrderDataCollectorInterface
 {
     /**
      * @var ScopeConfigInterface
@@ -45,14 +44,14 @@ class HeaderData implements DataCollectorInterface
         $address = $this->getShippingAddressFor($order);
 
         $output = [
-            'password' => $this->scopeConfig->getValue(
-                'sales/order_export/password',
-                ScopeInterface::SCOPE_STORES,
-                $order->getStoreId()
-            ),
+//            'password' => $this->scopeConfig->getValue(
+//                'sales/order_export/password',
+//                ScopeInterface::SCOPE_STORES,
+//                $order->getStoreId()
+//            ),
             'id' => $order->getIncrementId(),
             'currency' => $order->getBaseCurrencyCode(),
-            'customer_notes' => $order->getExtensionAttributes()->getBoldOrderComment(),
+//            'customer_notes' => $order->getExtensionAttributes()->getBoldOrderComment(),
             'merchant_notes' => $headerData->getMerchantNotes(),
             'discount' => $order->getBaseDiscountAmount(),
             'total' => $order->getBaseGrandTotal()

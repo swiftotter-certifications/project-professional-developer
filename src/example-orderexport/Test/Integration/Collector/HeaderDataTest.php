@@ -10,7 +10,7 @@ namespace SwiftOtter\OrderExport\Test\Integration\Collector;
 use Magento\Sales\Model\Order;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
-use SwiftOtter\OrderExport\Collector\HeaderData as HeaderDataCollector;
+use SwiftOtter\OrderExport\Action\OrderDataCollector\HeaderData as HeaderDataCollector;
 use SwiftOtter\OrderExport\Model\HeaderData as HeaderDataModel;
 
 class HeaderDataTest extends TestCase

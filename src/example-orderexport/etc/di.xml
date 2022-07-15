@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="SwiftOtter\OrderExport\Action\TransformOrderToArray">
+    <type name="SwiftOtter\OrderExport\Action\OrderDataCollector">
         <arguments>
             <argument name="collectors" xsi:type="array">
-                <item name="header_data" xsi:type="object">SwiftOtter\OrderExport\Collector\HeaderData</item>
-                <item name="item_data" xsi:type="object">SwiftOtter\OrderExport\Collector\ItemData</item>
+                <item name="header_data" xsi:type="object">SwiftOtter\OrderExport\Action\OrderDataCollector\HeaderData</item>
+                <item name="item_data" xsi:type="object">SwiftOtter\OrderExport\Action\OrderDataCollector\ItemData</item>
             </argument>
         </arguments>
     </type>

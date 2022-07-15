@@ -10,10 +10,10 @@ namespace SwiftOtter\OrderExport\Test\Integration\Action;
 use Magento\Sales\Model\Order;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
-use SwiftOtter\OrderExport\Action\TransformOrderToArray;
+use SwiftOtter\OrderExport\Action\OrderDataCollector;
 use SwiftOtter\OrderExport\Model\HeaderData;
 
-class TransformOrderToArrayTest extends TestCase
+class OrderDataCollectorTest extends TestCase
 {
     private $objectManager;
 
@@ -31,8 +31,8 @@ class TransformOrderToArrayTest extends TestCase
         $headerData = $this->objectManager->get(HeaderData::class);
         $headerData->setShipDate(new \DateTime('2019-11-01'));
 
-        /** @var TransformOrderToArray $action */
-        $action = $this->objectManager->get(TransformOrderToArray::class);
+        /** @var OrderDataCollector $action */
+        $action = $this->objectManager->get(OrderDataCollector::class);
         $output = $action->execute((int)$order->getId(), $headerData);
 
         $this->assertArraySubset([

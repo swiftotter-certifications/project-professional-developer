@@ -12,8 +12,8 @@ use SwiftOtter\OrderExport\Model\RequestValidator;
 
 class OrderExport
 {
-    /** @var TransformOrderToArray */
-    private $orderToArray;
+    /** @var OrderDataCollector */
+    private $orderDataCollector;
 
     /** @var PushDetailsToWebservice */
     private $pushDetailsToWebservice;
@@ -25,13 +25,13 @@ class OrderExport
     private $requestValidator;
 
     public function __construct(
-        RequestValidator $requestValidator,
-        TransformOrderToArray $orderToArray,
-        PushDetailsToWebservice $pushDetailsToWebservice,
+        RequestValidator         $requestValidator,
+        OrderDataCollector       $orderDataCollector,
+        PushDetailsToWebservice  $pushDetailsToWebservice,
         SaveExportDetailsToOrder $saveExportDetailsToOrder
     ) {
         $this->requestValidator = $requestValidator;
-        $this->orderToArray = $orderToArray;
+        $this->orderDataCollector = $orderDataCollector;
         $this->pushDetailsToWebservice = $pushDetailsToWebservice;
         $this->saveExportDetailsToOrder = $saveExportDetailsToOrder;
     }
@@ -45,7 +45,7 @@ class OrderExport
             return $results;
         }
 
-        $json = $this->orderToArray->execute($orderId, $headerData);
+        $json = $this->orderDataCollector->execute($orderId, $headerData);
 
         try {
             $results['success'] = $this->pushDetailsToWebservice->execute($orderId, $json);

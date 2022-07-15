@@ -8,30 +8,29 @@ declare(strict_types=1);
 namespace SwiftOtter\OrderExport\Action;
 
 use Magento\Sales\Api\OrderRepositoryInterface;
-use SwiftOtter\OrderExport\Api\DataCollectorInterface;
+use SwiftOtter\OrderExport\Api\OrderDataCollectorInterface;
 use SwiftOtter\OrderExport\Model\HeaderData;
 
-class TransformOrderToArray
+class OrderDataCollector
 {
-    /**
-     * @var DataCollectorInterface[]
-     */
-    private $collectors;
-
     /**
      * @var OrderRepositoryInterface
      */
     private $orderRepository;
+    /**
+     * @var OrderDataCollectorInterface[]
+     */
+    private $collectors;
 
     public function __construct(
-        array $collectors,
-        OrderRepositoryInterface $orderRepository
+        OrderRepositoryInterface $orderRepository,
+        array $collectors = []
     ) {
-        $this->collectors = $collectors;
         $this->orderRepository = $orderRepository;
+        $this->collectors = $collectors;
     }
 
-    public function execute(int $orderId, HeaderData $headerData)
+    public function execute(int $orderId, HeaderData $headerData): array
     {
         $order = $this->orderRepository->get($orderId);
         $output = [];

@@ -5,15 +5,15 @@ declare(strict_types=1);
  * @website https://swiftotter.com
  **/
 
-namespace SwiftOtter\OrderExport\Collector;
+namespace SwiftOtter\OrderExport\Action\OrderDataCollector;
 
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderItemInterface;
 use SwiftOtter\OrderExport\Action\GetOrderExportItems;
-use SwiftOtter\OrderExport\Api\DataCollectorInterface;
+use SwiftOtter\OrderExport\Api\OrderDataCollectorInterface;
 use SwiftOtter\OrderExport\Model\HeaderData;
 
-class ItemData implements DataCollectorInterface
+class ItemData implements OrderDataCollectorInterface
 {
     /**
      * @var GetOrderExportItems
