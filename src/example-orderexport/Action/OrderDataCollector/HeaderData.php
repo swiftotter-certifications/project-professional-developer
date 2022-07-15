@@ -44,14 +44,8 @@ class HeaderData implements OrderDataCollectorInterface
         $address = $this->getShippingAddressFor($order);
 
         $output = [
-//            'password' => $this->scopeConfig->getValue(
-//                'sales/order_export/password',
-//                ScopeInterface::SCOPE_STORES,
-//                $order->getStoreId()
-//            ),
             'id' => $order->getIncrementId(),
             'currency' => $order->getBaseCurrencyCode(),
-//            'customer_notes' => $order->getExtensionAttributes()->getBoldOrderComment(),
             'merchant_notes' => $headerData->getMerchantNotes(),
             'discount' => $order->getBaseDiscountAmount(),
             'total' => $order->getBaseGrandTotal()
