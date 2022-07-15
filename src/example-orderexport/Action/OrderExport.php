@@ -49,11 +49,10 @@ class OrderExport
 
         try {
             $results['success'] = $this->pushDetailsToWebservice->execute($orderId, $json);
-        } catch (\Exception $ex) {
+            $this->saveExportDetailsToOrder->execute($orderId, $headerData, $results);
+        } catch (\Throwable $ex) {
             $results['error'] = $ex->getMessage();
         }
-
-        $this->saveExportDetailsToOrder->execute($orderId, $headerData, $results);
 
         return $results;
     }

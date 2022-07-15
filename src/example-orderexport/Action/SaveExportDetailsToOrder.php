@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace SwiftOtter\OrderExport\Action;
 
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\InputException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Sales\Model\OrderRepository;
 use SwiftOtter\OrderExport\Model\HeaderData;
 use SwiftOtter\OrderExport\Model\OrderExportDetailsRepository;
@@ -31,6 +34,11 @@ class SaveExportDetailsToOrder
         $this->orderRepository = $orderRepository;
     }
 
+    /**
+     * @throws CouldNotSaveException
+     * @throws InputException
+     * @throws NoSuchEntityException
+     */
     public function execute(int $orderId, HeaderData $headerData, $results): void
     {
         $order = $this->orderRepository->get($orderId);
