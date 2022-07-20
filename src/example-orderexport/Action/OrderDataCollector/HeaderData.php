@@ -51,6 +51,7 @@ class HeaderData implements OrderDataCollectorInterface
             'total' => $order->getBaseGrandTotal()
         ];
 
+        $shipDate = $headerData->getShipDate();
         if ($address) {
             $output['shipping'] = [
                 'name' => $address->getFirstname() . ' ' . $address->getLastname(),
@@ -61,7 +62,7 @@ class HeaderData implements OrderDataCollectorInterface
                 'country' => $address->getCountryId(),
                 'amount' => $order->getBaseShippingAmount(),
                 'method' => $order->getShippingDescription(),
-                'ship_on' => $headerData->getShipDate()->format('d/m/Y')
+                'ship_on' => ($shipDate !== null) ? $shipDate->format('d/m/Y') : null
             ];
         }
 

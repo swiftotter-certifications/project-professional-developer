@@ -50,7 +50,9 @@ class SaveExportDetailsToOrder
 
         $details->setOrderId($orderId);
         $details->setMerchantNotes($headerData->getMerchantNotes());
-        $details->setShipOn($headerData->getShipDate());
+        if ($shipDate = $headerData->getShipDate()) {
+            $details->setShipOn($shipDate);
+        }
 
         $this->repository->save($details);
     }

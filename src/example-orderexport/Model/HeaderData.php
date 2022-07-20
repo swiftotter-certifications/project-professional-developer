@@ -9,13 +9,13 @@ namespace SwiftOtter\OrderExport\Model;
 
 class HeaderData
 {
-    /** @var \DateTime */
+    /** @var ?\DateTime */
     private $shipDate;
 
     /** @var string */
     private $merchantNotes;
 
-    public function getShipDate(): \DateTime
+    public function getShipDate(): ?\DateTime
     {
         return $this->shipDate;
     }
