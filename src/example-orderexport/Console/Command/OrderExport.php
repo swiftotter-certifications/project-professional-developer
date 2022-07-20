@@ -7,8 +7,6 @@ declare(strict_types = 1);
 
 namespace SwiftOtter\OrderExport\Console\Command;
 
-use Magento\Framework\Api\SearchCriteriaBuilder;
-use Magento\Sales\Api\OrderRepositoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,23 +15,14 @@ use Symfony\Component\Console\Input\InputOption;
 use SwiftOtter\OrderExport\Model\HeaderData;
 use SwiftOtter\OrderExport\Model\HeaderDataFactory;
 use SwiftOtter\OrderExport\Action\OrderExport as OrderExportAction;
-use Magento\Sales\Api\Data\OrderInterface;
 use SwiftOtter\OrderExport\Model\Config;
 
 class OrderExport extends Command
 {
-    const ARG_NAME_ORDER_NUM = 'order-num';
+    const ARG_NAME_ORDER_ID = 'order-id';
     const OPT_NAME_SHIP_DATE = 'ship-date';
     const OPT_NAME_NOTES = 'notes';
 
-    /**
-     * @var OrderRepositoryInterface
-     */
-    private $orderRepository;
-    /**
-     * @var SearchCriteriaBuilder
-     */
-    private $searchCriteriaBuilder;
     /**
      * @var HeaderDataFactory
      */
@@ -48,16 +37,12 @@ class OrderExport extends Command
     private $config;
 
     public function __construct(
-        OrderRepositoryInterface $orderRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
         HeaderDataFactory $headerDataFactory,
         OrderExportAction $orderExport,
         Config $config,
         string $name = null
     ) {
         parent::__construct($name);
-        $this->orderRepository = $orderRepository;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->headerDataFactory = $headerDataFactory;
         $this->orderExport = $orderExport;
         $this->config = $config;
@@ -71,9 +56,9 @@ class OrderExport extends Command
         $this->setName('order-export:run')
             ->setDescription('Export order to ERP')
             ->addArgument(
-                self::ARG_NAME_ORDER_NUM,
+                self::ARG_NAME_ORDER_ID,
                 InputArgument::REQUIRED,
-                'Order increment number'
+                'Order ID'
             )
             ->addOption(
                 self::OPT_NAME_SHIP_DATE,
@@ -97,19 +82,9 @@ class OrderExport extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $orderNum = $input->getArgument(self::ARG_NAME_ORDER_NUM);
+        $orderId = $input->getArgument(self::ARG_NAME_ORDER_ID);
         $shipDate = $input->getOption(self::OPT_NAME_SHIP_DATE);
         $notes = $input->getOption(self::OPT_NAME_NOTES);
-
-        $this->searchCriteriaBuilder->addFilter('increment_id', $orderNum);
-        $orders = $this->orderRepository->getList($this->searchCriteriaBuilder->create())->getItems();
-
-        if (count($orders) <= 0) {
-            $output->writeln(__('Order not found'));
-            return 1;
-        }
-        /** @var OrderInterface $order */
-        $order = reset($orders);
 
         /** @var HeaderData $headerData */
         $headerData = $this->headerDataFactory->create();
@@ -120,7 +95,7 @@ class OrderExport extends Command
             $headerData->setMerchantNotes((string) $notes);
         }
 
-        $result = $this->orderExport->run((int) $order->getId(), $headerData);
+        $result = $this->orderExport->run((int) $orderId, $headerData);
         $success = $result['success'] ?? false;
         if ($success) {
             $output->writeln(__('Successfully exported order'));
