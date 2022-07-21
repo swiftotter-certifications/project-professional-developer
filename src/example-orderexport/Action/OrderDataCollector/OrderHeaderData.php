@@ -14,7 +14,7 @@ use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\OrderAddressRepositoryInterface;
 use SwiftOtter\OrderExport\Api\OrderDataCollectorInterface;
 
-class HeaderData implements OrderDataCollectorInterface
+class OrderHeaderData implements OrderDataCollectorInterface
 {
     /**
      * @var ScopeConfigInterface
@@ -46,12 +46,10 @@ class HeaderData implements OrderDataCollectorInterface
         $output = [
             'id' => $order->getIncrementId(),
             'currency' => $order->getBaseCurrencyCode(),
-            'merchant_notes' => $headerData->getMerchantNotes(),
             'discount' => $order->getBaseDiscountAmount(),
             'total' => $order->getBaseGrandTotal()
         ];
 
-        $shipDate = $headerData->getShipDate();
         if ($address) {
             $output['shipping'] = [
                 'name' => $address->getFirstname() . ' ' . $address->getLastname(),
@@ -62,7 +60,6 @@ class HeaderData implements OrderDataCollectorInterface
                 'country' => $address->getCountryId(),
                 'amount' => $order->getBaseShippingAmount(),
                 'method' => $order->getShippingDescription(),
-                'ship_on' => ($shipDate !== null) ? $shipDate->format('d/m/Y') : null
             ];
         }
 

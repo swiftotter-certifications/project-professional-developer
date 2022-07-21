@@ -13,7 +13,7 @@ use SwiftOtter\OrderExport\Action\GetOrderExportItems;
 use SwiftOtter\OrderExport\Api\OrderDataCollectorInterface;
 use SwiftOtter\OrderExport\Model\HeaderData;
 
-class ItemData implements OrderDataCollectorInterface
+class OrderItemData implements OrderDataCollectorInterface
 {
     /**
      * @var GetOrderExportItems
