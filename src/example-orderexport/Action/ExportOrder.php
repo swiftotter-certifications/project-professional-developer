@@ -10,9 +10,9 @@ namespace SwiftOtter\OrderExport\Action;
 use SwiftOtter\OrderExport\Model\HeaderData;
 use SwiftOtter\OrderExport\Model\RequestValidator;
 
-class OrderExport
+class ExportOrder
 {
-    /** @var OrderDataCollector */
+    /** @var CollectOrderData */
     private $orderDataCollector;
 
     /** @var PushDetailsToWebservice */
@@ -26,7 +26,7 @@ class OrderExport
 
     public function __construct(
         RequestValidator         $requestValidator,
-        OrderDataCollector       $orderDataCollector,
+        CollectOrderData         $orderDataCollector,
         PushDetailsToWebservice  $pushDetailsToWebservice,
         SaveExportDetailsToOrder $saveExportDetailsToOrder
     ) {

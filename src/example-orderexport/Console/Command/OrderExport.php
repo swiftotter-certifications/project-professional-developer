@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use SwiftOtter\OrderExport\Model\HeaderData;
 use SwiftOtter\OrderExport\Model\HeaderDataFactory;
-use SwiftOtter\OrderExport\Action\OrderExport as OrderExportAction;
+use SwiftOtter\OrderExport\Action\ExportOrder as OrderExportAction;
 use SwiftOtter\OrderExport\Model\Config;
 
 class OrderExport extends Command

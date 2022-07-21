@@ -12,7 +12,7 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 use SwiftOtter\OrderExport\Api\OrderDataCollectorInterface;
 use SwiftOtter\OrderExport\Model\HeaderData;
 
-class OrderDataCollector
+class CollectOrderData
 {
     /**
      * @var OrderRepositoryInterface

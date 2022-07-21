@@ -10,10 +10,10 @@ namespace SwiftOtter\OrderExport\Test\Integration\Action;
 use Magento\Sales\Model\Order;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
-use SwiftOtter\OrderExport\Action\OrderDataCollector;
+use SwiftOtter\OrderExport\Action\CollectOrderData;
 use SwiftOtter\OrderExport\Model\HeaderData;
 
-class OrderDataCollectorTest extends TestCase
+class CollectOrderDataTest extends TestCase
 {
     private $objectManager;
 
@@ -31,8 +31,8 @@ class OrderDataCollectorTest extends TestCase
         $headerData = $this->objectManager->get(HeaderData::class);
         $headerData->setShipDate(new \DateTime('2019-11-01'));
 
-        /** @var OrderDataCollector $action */
-        $action = $this->objectManager->get(OrderDataCollector::class);
+        /** @var CollectOrderData $action */
+        $action = $this->objectManager->get(CollectOrderData::class);
         $output = $action->execute((int)$order->getId(), $headerData);
 
         $this->assertArraySubset([
