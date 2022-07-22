@@ -19,7 +19,7 @@ class GetOrderExportItems
     private $allowedTypes;
 
     public function __construct(
-        array $allowedTypes = [ProductType::TYPE_SIMPLE, ProductType::TYPE_VIRTUAL]
+        array $allowedTypes = []
     ) {
         $this->allowedTypes = $allowedTypes;
     }

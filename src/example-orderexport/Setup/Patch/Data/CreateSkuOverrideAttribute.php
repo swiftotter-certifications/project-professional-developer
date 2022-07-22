@@ -60,7 +60,7 @@ class CreateSkuOverrideAttribute implements DataPatchInterface
                 'used_for_promo_rules' => false,
                 'visible_on_front' => false,
                 'used_in_product_listing' => false,
-                'visible' => false,
+                'visible' => true,
                 'scope' => 'global',
                 'input' => 'text',
                 'required' => false,

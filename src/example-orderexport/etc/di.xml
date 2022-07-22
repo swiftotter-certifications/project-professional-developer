@@ -42,4 +42,13 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="SwiftOtter\OrderExport\Action\GetOrderExportItems">
+        <arguments>
+            <argument name="allowedTypes" xsi:type="array">
+                <item name="simple" xsi:type="const">Magento\Catalog\Model\Product\Type::DEFAULT_TYPE</item>
+                <item name="virtual" xsi:type="const">Magento\Catalog\Model\Product\Type::TYPE_VIRTUAL</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

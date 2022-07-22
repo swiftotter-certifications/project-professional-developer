@@ -95,7 +95,7 @@ class OrderExport extends Command
             $headerData->setMerchantNotes((string) $notes);
         }
 
-        $result = $this->orderExport->run((int) $orderId, $headerData);
+        $result = $this->orderExport->execute((int) $orderId, $headerData);
         $success = $result['success'] ?? false;
         if ($success) {
             $output->writeln(__('Successfully exported order'));
