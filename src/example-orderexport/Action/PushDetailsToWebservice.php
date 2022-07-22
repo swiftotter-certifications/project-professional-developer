@@ -35,7 +35,7 @@ class PushDetailsToWebservice
     /**
      * @throws \Throwable
      */
-    public function execute(int $orderId, array $orderDetails): bool
+    public function execute(array $orderDetails): bool
     {
         $apiUrl = $this->config->getApiUrl();
         $apiToken = $this->config->getApiToken();
@@ -58,8 +58,7 @@ class PushDetailsToWebservice
             $response = $client->post($apiUrl, $options);
             $this->processResponse($response);
         } catch (\Throwable $ex) {
-            $this->logger->critical($ex->getMessage(), [
-                'order_id' => $orderId,
+            $this->logger->error($ex->getMessage(), [
                 'details' => $orderDetails
             ]);
 

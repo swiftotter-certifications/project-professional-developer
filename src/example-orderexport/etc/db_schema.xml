@@ -5,8 +5,8 @@
         <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="Value ID"/>
         <column xsi:type="int" name="order_id" padding="10" unsigned="true" nullable="false" comment="Entity Id"/>
         <column xsi:type="date" name="ship_on" comment="Shipping on"/>
-        <column xsi:type="datetime" name="exported_at" comment="Exported at"/>
         <column xsi:type="text" name="merchant_notes" comment="Merchant notes"/>
+        <column xsi:type="datetime" name="exported_at" comment="Exported at"/>
         <column xsi:type="smallint" name="archived" unsigned="false" nullable="false" default="0" comment="Is Archived" />
         <constraint xsi:type="foreign"
                     referenceId="SALES_ORDER_EXPORT_ORDER_ID"

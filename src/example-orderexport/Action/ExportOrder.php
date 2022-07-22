@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace SwiftOtter\OrderExport\Action;
 
+use Magento\Framework\Exception\NoSuchEntityException;
 use SwiftOtter\OrderExport\Model\HeaderData;
 
 class ExportOrder
@@ -30,6 +31,9 @@ class ExportOrder
         $this->saveExportDetailsToOrder = $saveExportDetailsToOrder;
     }
 
+    /**
+     * @throws NoSuchEntityException
+     */
     public function execute(int $orderId, HeaderData $headerData): array
     {
         $results = ['success' => false, 'error' => null];
@@ -37,7 +41,7 @@ class ExportOrder
         $exportData = $this->orderDataCollector->execute($orderId, $headerData);
 
         try {
-            $results['success'] = $this->pushDetailsToWebservice->execute($orderId, $exportData);
+            $results['success'] = $this->pushDetailsToWebservice->execute($exportData);
             $this->saveExportDetailsToOrder->execute($orderId, $headerData, $results);
         } catch (\Throwable $ex) {
             $results['error'] = $ex->getMessage();

@@ -13,6 +13,7 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Laminas\Http\Request;
+use Psr\Log\LoggerInterface;
 
 class Index implements ActionInterface, HttpPostActionInterface
 {
@@ -24,13 +25,19 @@ class Index implements ActionInterface, HttpPostActionInterface
      * @var RequestInterface|Request
      */
     private $request;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     public function __construct(
         JsonFactory $jsonFactory,
-        RequestInterface $request
+        RequestInterface $request,
+        LoggerInterface $logger
     ) {
         $this->jsonFactory = $jsonFactory;
         $this->request = $request;
+        $this->logger = $logger;
     }
 
     /**
@@ -78,6 +85,8 @@ class Index implements ActionInterface, HttpPostActionInterface
         if (!isset($data['id']) || !isset($data['shipping']) || !isset($data['items'])) {
             throw new \Exception('Minimum order data missing');
         }
+
+        $this->logger->info(print_r($data, true));
 
         return $this;
     }
