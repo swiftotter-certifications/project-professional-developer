@@ -12,15 +12,11 @@ use Magento\Framework\Api\SearchResultsInterface;
 interface OrderExportDetailsSearchResultsInterface extends SearchResultsInterface
 {
     /**
-     * Get details list.
-     *
      * @return \SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface[]
      */
     public function getItems();
 
     /**
-     * Set details list.
-     *
      * @param \SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface[] $items
      * @return $this
      */
