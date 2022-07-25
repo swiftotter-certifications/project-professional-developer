@@ -21,6 +21,7 @@ use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Controller\AbstractController\OrderViewAuthorizationInterface;
 use Magento\Sales\Model\Order;
+use SwiftOtter\OrderExport\Model\Config;
 
 class Index implements ActionInterface
 {
@@ -52,6 +53,10 @@ class Index implements ActionInterface
      * @var UrlInterface
      */
     private $urlBuilder;
+    /**
+     * @var Config
+     */
+    private $config;
 
     public function __construct(
         PageFactory $pageFactory,
@@ -60,7 +65,8 @@ class Index implements ActionInterface
         OrderRepositoryInterface $orderRepository,
         OrderViewAuthorizationInterface $orderAuthorization,
         RedirectFactory $redirectFactory,
-        UrlInterface $urlBuilder
+        UrlInterface $urlBuilder,
+        Config $config
     ) {
         $this->pageFactory = $pageFactory;
         $this->request = $request;
@@ -69,6 +75,7 @@ class Index implements ActionInterface
         $this->orderAuthorization = $orderAuthorization;
         $this->redirectFactory = $redirectFactory;
         $this->urlBuilder = $urlBuilder;
+        $this->config = $config;
     }
 
     /**
@@ -76,9 +83,14 @@ class Index implements ActionInterface
      */
     public function execute()
     {
-        $orderId = (int) $this->request->getParam('order_id');
         /** @var Forward $forward */
         $forward = $this->forwardFactory->create();
+
+        if (!$this->config->isEnabled()) {
+            return $forward->forward('noroute');
+        }
+
+        $orderId = (int) $this->request->getParam('order_id');
         if (!$orderId) {
             return $forward->forward('noroute');
         }

@@ -56,6 +56,10 @@ class AttachExpeditedExportNote implements ObserverInterface
     public function execute(Observer $observer)
     {
         try {
+            if (!$this->config->isEnabled()) {
+                return;
+            }
+
             /** @var OrderInterface $order */
             $order = $observer->getEvent()->getData('order');
             if (!$order) {

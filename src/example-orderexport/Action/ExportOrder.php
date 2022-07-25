@@ -7,8 +7,10 @@ declare(strict_types=1);
 
 namespace SwiftOtter\OrderExport\Action;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use SwiftOtter\OrderExport\Model\HeaderData;
+use SwiftOtter\OrderExport\Model\Config;
 
 class ExportOrder
 {
@@ -21,21 +23,31 @@ class ExportOrder
     /** @var SaveExportDetailsToOrder */
     private $saveExportDetailsToOrder;
 
+    /** @var Config */
+    private $config;
+
     public function __construct(
         CollectOrderData         $orderDataCollector,
         PushDetailsToWebservice  $pushDetailsToWebservice,
-        SaveExportDetailsToOrder $saveExportDetailsToOrder
+        SaveExportDetailsToOrder $saveExportDetailsToOrder,
+        Config                   $config
     ) {
         $this->orderDataCollector = $orderDataCollector;
         $this->pushDetailsToWebservice = $pushDetailsToWebservice;
         $this->saveExportDetailsToOrder = $saveExportDetailsToOrder;
+        $this->config = $config;
     }
 
     /**
      * @throws NoSuchEntityException
+     * @throws LocalizedException
      */
     public function execute(int $orderId, HeaderData $headerData): array
     {
+        if (!$this->config->isEnabled()) {
+            throw new LocalizedException(__('Order export is disabled'));
+        }
+
         $results = ['success' => false, 'error' => null];
 
         $exportData = $this->orderDataCollector->execute($orderId, $headerData);
