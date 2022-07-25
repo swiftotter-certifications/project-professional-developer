@@ -14,13 +14,14 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsSearchResultsInterface;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsSearchResultsInterfaceFactory as SearchResultsInterfaceFactory;
+use SwiftOtter\OrderExport\Api\OrderExportDetailsRepositoryInterface;
 use SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails as OrderExportDetailsResource;
 use SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails\Collection as OrderExportDetailsCollection;
 use SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails\CollectionFactory as DetailsCollectionFactory;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterfaceFactory;
 
-class OrderExportDetailsRepository
+class OrderExportDetailsRepository implements OrderExportDetailsRepositoryInterface
 {
     /**
      * @var OrderExportDetailsResource
@@ -62,7 +63,7 @@ class OrderExportDetailsRepository
     }
 
     /**
-     * @throws CouldNotSaveException
+     * {@inheritdoc}
      */
     public function save(OrderExportDetailsInterface $exportDetails): OrderExportDetailsInterface
     {
@@ -75,9 +76,9 @@ class OrderExportDetailsRepository
     }
 
     /**
-     * @throws NoSuchEntityException
+     * {@inheritdoc}
      */
-    public function getById($detailsId): OrderExportDetailsInterface
+    public function getById(int $detailsId): OrderExportDetailsInterface
     {
         $details = $this->detailsFactory->create();
         $this->resource->load($details, $detailsId);
@@ -104,7 +105,7 @@ class OrderExportDetailsRepository
     }
 
     /**
-     * @throws CouldNotDeleteException
+     * {@inheritdoc}
      */
     public function delete(OrderExportDetailsInterface $exportDetails): bool
     {
@@ -118,8 +119,7 @@ class OrderExportDetailsRepository
     }
 
     /**
-     * @throws CouldNotDeleteException
-     * @throws NoSuchEntityException
+     * {@inheritdoc}
      */
     public function deleteById($blockId): bool
     {

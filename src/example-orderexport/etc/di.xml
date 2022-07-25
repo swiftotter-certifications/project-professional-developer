@@ -13,6 +13,8 @@
 
     <preference for="SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface"
                 type="SwiftOtter\OrderExport\Model\OrderExportDetails" />
+    <preference for="SwiftOtter\OrderExport\Api\OrderExportDetailsRepositoryInterface"
+                type="SwiftOtter\OrderExport\Model\OrderExportDetailsRepository" />
     <preference for="SwiftOtter\OrderExport\Api\Data\OrderExportDetailsSearchResultsInterface"
                 type="SwiftOtter\OrderExport\Model\OrderExportDetailsSearchResults" />
 

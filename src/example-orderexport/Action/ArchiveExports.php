@@ -8,14 +8,14 @@ declare(strict_types = 1);
 namespace SwiftOtter\OrderExport\Action;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
-use SwiftOtter\OrderExport\Model\OrderExportDetailsRepository;
+use SwiftOtter\OrderExport\Api\OrderExportDetailsRepositoryInterface;
 
 class ArchiveExports
 {
     const EXPIRATION_DAYS = 30;
 
     /**
-     * @var OrderExportDetailsRepository
+     * @var OrderExportDetailsRepositoryInterface
      */
     private $orderExportDetailsRepository;
     /**
@@ -24,7 +24,7 @@ class ArchiveExports
     private $searchCriteriaBuilder;
 
     public function __construct(
-        OrderExportDetailsRepository $orderExportDetailsRepository,
+        OrderExportDetailsRepositoryInterface $orderExportDetailsRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
         $this->orderExportDetailsRepository = $orderExportDetailsRepository;

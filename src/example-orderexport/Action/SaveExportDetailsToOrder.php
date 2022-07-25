@@ -11,13 +11,13 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Sales\Model\OrderRepository;
+use SwiftOtter\OrderExport\Api\OrderExportDetailsRepositoryInterface;
 use SwiftOtter\OrderExport\Model\HeaderData;
-use SwiftOtter\OrderExport\Model\OrderExportDetailsRepository;
 
 class SaveExportDetailsToOrder
 {
     /**
-     * @var OrderExportDetailsRepository
+     * @var OrderExportDetailsRepositoryInterface
      */
     private $repository;
 
@@ -28,7 +28,7 @@ class SaveExportDetailsToOrder
 
     public function __construct(
         OrderRepository $orderRepository,
-        OrderExportDetailsRepository $repository
+        OrderExportDetailsRepositoryInterface $repository
     ) {
         $this->repository = $repository;
         $this->orderRepository = $orderRepository;
@@ -39,7 +39,7 @@ class SaveExportDetailsToOrder
      * @throws InputException
      * @throws NoSuchEntityException
      */
-    public function execute(int $orderId, HeaderData $headerData, $results): void
+    public function execute(int $orderId, HeaderData $headerData, array $results): void
     {
         $order = $this->orderRepository->get($orderId);
         $details = $order->getExtensionAttributes()->getExportDetails();

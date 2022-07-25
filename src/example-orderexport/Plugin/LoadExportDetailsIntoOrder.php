@@ -14,7 +14,7 @@ use Magento\Sales\Api\Data\OrderSearchResultInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterfaceFactory;
-use SwiftOtter\OrderExport\Model\OrderExportDetailsRepository;
+use SwiftOtter\OrderExport\Api\OrderExportDetailsRepositoryInterface;
 
 class LoadExportDetailsIntoOrder
 {
@@ -29,7 +29,7 @@ class LoadExportDetailsIntoOrder
     private $searchCriteriaBuilder;
 
     /**
-     * @var OrderExportDetailsRepository
+     * @var OrderExportDetailsRepositoryInterface
      */
     private $orderExportDetailsRepository;
 
@@ -41,7 +41,7 @@ class LoadExportDetailsIntoOrder
     public function __construct(
         OrderExtensionInterfaceFactory $extension,
         SearchCriteriaBuilder $searchCriteriaBuilder,
-        OrderExportDetailsRepository $orderExportDetailsRepository,
+        OrderExportDetailsRepositoryInterface $orderExportDetailsRepository,
         OrderExportDetailsInterfaceFactory $detailsFactory
     ) {
         $this->extensionFactory = $extension;

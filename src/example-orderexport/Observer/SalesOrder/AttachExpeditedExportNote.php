@@ -14,8 +14,8 @@ use Magento\Store\Model\ScopeInterface;
 use SwiftOtter\OrderExport\Action\GetOrderExportItems;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterfaceFactory;
+use SwiftOtter\OrderExport\Api\OrderExportDetailsRepositoryInterface;
 use SwiftOtter\OrderExport\Model\Config;
-use SwiftOtter\OrderExport\Model\OrderExportDetailsRepository;
 
 class AttachExpeditedExportNote implements ObserverInterface
 {
@@ -34,7 +34,7 @@ class AttachExpeditedExportNote implements ObserverInterface
      */
     private $orderExportDetailsFactory;
     /**
-     * @var OrderExportDetailsRepository
+     * @var OrderExportDetailsRepositoryInterface
      */
     private $orderExportDetailsRepository;
 
@@ -42,7 +42,7 @@ class AttachExpeditedExportNote implements ObserverInterface
         Config $config,
         GetOrderExportItems $getOrderExportItems,
         OrderExportDetailsInterfaceFactory $orderExportDetailsFactory,
-        OrderExportDetailsRepository $orderExportDetailsRepository
+        OrderExportDetailsRepositoryInterface $orderExportDetailsRepository
     ) {
         $this->config = $config;
         $this->getOrderExportItems = $getOrderExportItems;
