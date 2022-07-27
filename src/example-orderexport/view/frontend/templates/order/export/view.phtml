@@ -12,7 +12,7 @@ $exportDetails = $viewModel->getOrderExportDetails();
 $shipOn = $exportDetails->getShipOn();
 ?>
 <p class="back-link">
-    <a href="<?= $viewModel->getOrderViewUrl() ?>">Back to Order</a>
+    <a href="<?= $viewModel->getOrderViewUrl() ?>"><?= __('Back to Order') ?></a>
 </p>
 
 <?php if ($exportDetails === null || !$exportDetails->getId()): ?>

@@ -7,12 +7,11 @@ declare(strict_types = 1);
 
 namespace SwiftOtter\OrderExport\Controller\View;
 
+use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\Forward;
 use Magento\Framework\Controller\Result\ForwardFactory;
-use Magento\Framework\Controller\Result\Redirect;
-use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Result\Page;
@@ -23,7 +22,7 @@ use Magento\Sales\Controller\AbstractController\OrderViewAuthorizationInterface;
 use Magento\Sales\Model\Order;
 use SwiftOtter\OrderExport\Model\Config;
 
-class Index implements ActionInterface
+class Index implements ActionInterface, HttpGetActionInterface
 {
     /**
      * @var PageFactory
@@ -46,10 +45,6 @@ class Index implements ActionInterface
      */
     private $orderAuthorization;
     /**
-     * @var RedirectFactory
-     */
-    private $redirectFactory;
-    /**
      * @var UrlInterface
      */
     private $urlBuilder;
@@ -64,7 +59,6 @@ class Index implements ActionInterface
         ForwardFactory $forwardFactory,
         OrderRepositoryInterface $orderRepository,
         OrderViewAuthorizationInterface $orderAuthorization,
-        RedirectFactory $redirectFactory,
         UrlInterface $urlBuilder,
         Config $config
     ) {
@@ -73,7 +67,6 @@ class Index implements ActionInterface
         $this->forwardFactory = $forwardFactory;
         $this->orderRepository = $orderRepository;
         $this->orderAuthorization = $orderAuthorization;
-        $this->redirectFactory = $redirectFactory;
         $this->urlBuilder = $urlBuilder;
         $this->config = $config;
     }
@@ -107,9 +100,7 @@ class Index implements ActionInterface
          * we should do a type check
          */
         if (!$this->orderAuthorization->canView($order)) {
-            /** @var Redirect $redirect */
-            $redirect = $this->redirectFactory->create();
-            return $redirect->setUrl($this->urlBuilder->getUrl('sales/order/history'));
+            return $forward->forward('noroute');
         }
 
         /** @var Page $resultPage */
