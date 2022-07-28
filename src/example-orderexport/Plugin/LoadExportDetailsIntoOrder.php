@@ -50,17 +50,27 @@ class LoadExportDetailsIntoOrder
         $this->detailsFactory = $detailsFactory;
     }
 
+    /**
+     * @param OrderInterface $order
+     * @return OrderInterface
+     */
     public function afterGet(
         OrderRepositoryInterface $orderRepository,
-        OrderInterface $order
+        $order
     ) {
         $this->setExtensionAttributes($order);
 
         return $order;
     }
 
-    public function afterGetList(OrderRepositoryInterface $orderRepository, OrderSearchResultInterface $searchResult)
-    {
+    /**
+     * @param OrderSearchResultInterface $searchResult
+     * @return OrderSearchResultInterface
+     */
+    public function afterGetList(
+        OrderRepositoryInterface $orderRepository,
+        $searchResult
+    ) {
         foreach ($searchResult->getItems() as $order) {
             $this->setExtensionAttributes($order);
         }
@@ -70,7 +80,11 @@ class LoadExportDetailsIntoOrder
 
     private function setExtensionAttributes(OrderInterface $order): void
     {
-        $extensionAttributes = $order->getExtensionAttributes() ?? $this->extensionFactory->create();
+        $extensionAttributes = $order->getExtensionAttributes();
+        if (!$extensionAttributes) {
+            $extensionAttributes = $this->extensionFactory->create();
+            $order->setExtensionAttributes($extensionAttributes);
+        }
 
         $details = $this->orderExportDetailsRepository->getList(
             $this->searchCriteriaBuilder
@@ -85,7 +99,5 @@ class LoadExportDetailsIntoOrder
             $details = $this->detailsFactory->create();
             $extensionAttributes->setExportDetails($details);
         }
-
-        $order->setExtensionAttributes($extensionAttributes);
     }
 }
