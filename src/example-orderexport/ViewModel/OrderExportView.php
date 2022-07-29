@@ -94,7 +94,9 @@ class OrderExportView implements ArgumentInterface
             return null;
         }
 
-        return $orderExts->getExportDetails();
+        /** @var OrderExportDetailsInterface $exportDetails */
+        $exportDetails = $orderExts->getExportDetails();
+        return $exportDetails;
     }
 
     private function getOrder(): ?OrderInterface

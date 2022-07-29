@@ -11,27 +11,30 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Sales\Model\OrderRepository;
+use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface;
+use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterfaceFactory;
 use SwiftOtter\OrderExport\Api\OrderExportDetailsRepositoryInterface;
 use SwiftOtter\OrderExport\Model\HeaderData;
 
 class SaveExportDetailsToOrder
 {
-    /**
-     * @var OrderExportDetailsRepositoryInterface
-     */
+    /** @var OrderExportDetailsRepositoryInterface */
     private $repository;
 
-    /**
-     * @var OrderRepository
-     */
+    /** @var OrderRepository */
     private $orderRepository;
+
+    /** @var OrderExportDetailsInterfaceFactory */
+    private $exportDetailsFactory;
 
     public function __construct(
         OrderRepository $orderRepository,
-        OrderExportDetailsRepositoryInterface $repository
+        OrderExportDetailsRepositoryInterface $repository,
+        OrderExportDetailsInterfaceFactory $exportDetailsFactory
     ) {
         $this->repository = $repository;
         $this->orderRepository = $orderRepository;
+        $this->exportDetailsFactory = $exportDetailsFactory;
     }
 
     /**
@@ -42,14 +45,26 @@ class SaveExportDetailsToOrder
     public function execute(int $orderId, HeaderData $headerData, array $results): void
     {
         $order = $this->orderRepository->get($orderId);
-        $details = $order->getExtensionAttributes()->getExportDetails();
+        $orderExts = $order->getExtensionAttributes();
+        if ($orderExts) {
+            /** @var OrderExportDetailsInterface $details */
+            $details = $orderExts->getExportDetails();
+        } else {
+            /** @var OrderExportDetailsInterface $details */
+            $details = $this->exportDetailsFactory->create();
+        }
+
+        if (!$details->getOrderId()) {
+            $details->setOrderId($orderId);
+        }
 
         if (isset($results['success']) && $results['success'] === true) {
             $details->setExportedAt((new \DateTime())->setTimezone(new \DateTimeZone('UTC')));
         }
 
-        $details->setOrderId($orderId);
-        $details->setMerchantNotes($headerData->getMerchantNotes());
+        if ($merchantNotes = $headerData->getMerchantNotes()) {
+            $details->setMerchantNotes($merchantNotes);
+        }
         if ($shipDate = $headerData->getShipDate()) {
             $details->setShipOn($shipDate);
         }

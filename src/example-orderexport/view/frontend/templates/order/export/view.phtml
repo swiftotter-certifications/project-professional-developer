@@ -10,12 +10,20 @@
 $viewModel = $block->getData('view_model');
 $exportDetails = $viewModel->getOrderExportDetails();
 $shipOn = $exportDetails->getShipOn();
+
+$backUrl = $viewModel->getOrderViewUrl();
+if ($backUrl):
 ?>
+
 <p class="back-link">
-    <a href="<?= $viewModel->getOrderViewUrl() ?>"><?= __('Back to Order') ?></a>
+    <a href="<?= $backUrl ?>"><?= __('Back to Order') ?></a>
 </p>
 
-<?php if ($exportDetails === null || !$exportDetails->getId()): ?>
+<?php
+endif;
+
+if ($exportDetails === null || !$exportDetails->getId()):
+?>
 
 <p class="no-results">
     <?= __('No details found') ?>

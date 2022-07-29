@@ -11,7 +11,7 @@ interface OrderExportDetailsInterface
 {
     public function getId();
 
-    public function getOrderId(): int;
+    public function getOrderId(): ?int;
 
     public function setOrderId(int $orderId): OrderExportDetailsInterface;
 

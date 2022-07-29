@@ -17,9 +17,9 @@ class OrderExportDetails extends AbstractModel implements OrderExportDetailsInte
         $this->_init(\SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails::class);
     }
 
-    public function getOrderId(): int
+    public function getOrderId(): ?int
     {
-        return (int)$this->getData('order_id');
+        return ($this->hasData('order_id')) ? (int) $this->getData('order_id') : null;
     }
 
     public function setOrderId(int $orderId): OrderExportDetailsInterface
