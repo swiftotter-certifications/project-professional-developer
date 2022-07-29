@@ -52,7 +52,13 @@ class OrderExport extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Hello world, from a CLI command!');
+        $orderId = (int) $input->getArgument(self::ARG_NAME_ORDER_ID);
+        $notes = $input->getOption(self::OPT_NAME_MERCHANT_NOTES);
+        $shipDate = $input->getOption(self::OPT_NAME_SHIP_DATE);
+
+        $output->writeln(__('Order ID is %1', $orderId));
+        $output->writeln(__('Notes is "%1"', $notes));
+        $output->writeln(__('Ship date is %1', $shipDate));
 
         return 0;
     }
