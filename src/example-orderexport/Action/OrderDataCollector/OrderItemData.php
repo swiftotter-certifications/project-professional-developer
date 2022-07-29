@@ -62,6 +62,15 @@ class OrderItemData implements OrderDataCollectorInterface
         ];
     }
 
+    /**
+     * @return array{
+     *     sku: string,
+     *     qty: float|null,
+     *     item_price: float|null,
+     *     item_cost: float|null,
+     *     total: float|null
+     * }
+     */
     private function transform(OrderItemInterface $orderItem, ?ProductInterface $product): array
     {
         return [
@@ -73,6 +82,9 @@ class OrderItemData implements OrderDataCollectorInterface
         ];
     }
 
+    /**
+     * @param string[] $skus
+     */
     private function loadProducts(array $skus): array
     {
         $this->searchCriteriaBuilder->addFilter('sku', $skus, 'in');
