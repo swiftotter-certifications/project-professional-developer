@@ -1,17 +1,21 @@
-.order-export-details {
-    .lib-clearfix();
+& when (@media-common = true) {
 
-    dt, dd {
-        float: left;
-    }
+    .order-export-details {
+        .lib-clearfix();
 
-    dt {
-        width: 20%;
-        clear: both;
-        text-transform: uppercase;
+        dt, dd {
+            float: left;
+        }
 
-        &::after {
-            content: ':';
+        dt {
+            width: 20%;
+            clear: both;
+            text-transform: uppercase;
+
+            &::after {
+                content: ':';
+            }
         }
     }
+
 }

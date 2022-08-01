@@ -29,6 +29,7 @@ class FulfillmentNoticeProcessor implements LayoutProcessorInterface
      */
     public function process($jsLayout)
     {
+        /** @var BlockByIdentifier $fulfillmentBlock */
         $fulfillmentBlock = $this->layout->createBlock(BlockByIdentifier::class);
         $fulfillmentBlock->setData('identifier', 'fulfillment-notice');
 
