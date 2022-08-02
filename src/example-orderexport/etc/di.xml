@@ -13,6 +13,7 @@
             <argument name="collectors" xsi:type="array">
                 <item name="order_header_data" xsi:type="object">SwiftOtter\OrderExport\Action\OrderDataCollector\OrderHeaderData</item>
                 <item name="order_item_data" xsi:type="object">SwiftOtter\OrderExport\Action\OrderDataCollector\OrderItemData</item>
+                <item name="export_header_data" xsi:type="object">SwiftOtter\OrderExport\Action\OrderDataCollector\ExportHeaderData</item>
             </argument>
         </arguments>
     </type>
