@@ -7,8 +7,9 @@ declare(strict_types=1);
 
 namespace SwiftOtter\OrderExport\Console\Command;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use SwiftOtter\OrderExport\Action\CollectOrderData;
+use SwiftOtter\OrderExport\Action\ExportOrder;
 use SwiftOtter\OrderExport\Model\HeaderData;
 use SwiftOtter\OrderExport\Model\HeaderDataFactory;
 use Symfony\Component\Console\Command\Command;
@@ -25,17 +26,17 @@ class OrderExport extends Command
 
     /** @var HeaderDataFactory */
     private $headerDataFactory;
-    /** @var CollectOrderData */
-    private $collectOrderData;
+    /** @var ExportOrder */
+    private $exportOrder;
 
     public function __construct(
         HeaderDataFactory $headerDataFactory,
-        CollectOrderData $collectOrderData,
+        ExportOrder $exportOrder,
         string $name = null
     ) {
         parent::__construct($name);
         $this->headerDataFactory = $headerDataFactory;
-        $this->collectOrderData = $collectOrderData;
+        $this->exportOrder = $exportOrder;
     }
 
     /**
@@ -66,6 +67,7 @@ class OrderExport extends Command
 
     /**
      * @throws NoSuchEntityException
+     * @throws LocalizedException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -82,9 +84,18 @@ class OrderExport extends Command
             $headerData->setMerchantNotes($notes);
         }
 
-        $orderData = $this->collectOrderData->execute($orderId, $headerData);
-
-        $output->writeln(print_r($orderData, true));
+        $result = $this->exportOrder->execute((int) $orderId, $headerData);
+        $success = $result['success'] ?? false;
+        if ($success) {
+            $output->writeln(__('Successfully exported order'));
+        } else {
+            $msg = $result['error'] ?? null;
+            if ($msg === null) {
+                $msg = __('Unexpected errors occurred');
+            }
+            $output->writeln($msg);
+            return 1;
+        }
 
         return 0;
     }
