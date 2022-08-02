@@ -7,4 +7,14 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="SwiftOtter\OrderExport\Action\CollectOrderData">
+        <arguments>
+            <argument name="collectors" xsi:type="array">
+                <!--
+                <item name="{name}" xsi:type="object">{Some implementation of OrderDataCollectorInterface}</item>
+                -->
+            </argument>
+        </arguments>
+    </type>
 </config>
