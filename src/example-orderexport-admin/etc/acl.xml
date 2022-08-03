@@ -4,7 +4,7 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="SwiftOtter_OrderExportAdmin::OrderExport" title="Order Export" />
+                <resource id="SwiftOtter_OrderExportAdmin::OrderExport" title="Order Export" translate="title" />
             </resource>
         </resources>
     </acl>
