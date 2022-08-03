@@ -15,7 +15,7 @@ use Magento\Framework\View\Result\PageFactory;
 
 class Index extends BackendAction implements HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = 'SwiftOtter_OrderExportAdmin::OrderExport';
+    const ADMIN_RESOURCE = '{RESOURCE}';
 
     /**
      * @var PageFactory
