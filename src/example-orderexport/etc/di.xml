@@ -4,6 +4,7 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="orderExportRun" xsi:type="object">SwiftOtter\OrderExport\Console\Command\OrderExport</item>
+                <item name="orderExportTest" xsi:type="object">SwiftOtter\OrderExport\Console\Command\OrderExportTest</item>
             </argument>
         </arguments>
     </type>
@@ -37,4 +38,7 @@
             </argument>
         </arguments>
     </type>
+
+    <preference for="SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface"
+                type="SwiftOtter\OrderExport\Model\OrderExportDetails" />
 </config>
