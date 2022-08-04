@@ -7,28 +7,23 @@ declare(strict_types=1);
 
 namespace SwiftOtter\OrderExport\Console\Command;
 
-use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface;
-use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterfaceFactory;
-use SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails\Collection as OrderExportDetailsCollection;
+use SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails\CollectionFactory as OrderExportDetailsCollectionFactory;
 
 class OrderExportTest extends Command
 {
-    /** @var OrderExportDetailsInterfaceFactory */
-    private $orderExportDetailsFactory;
-    /** @var OrderExportDetails */
-    private $orderExportDetailsResource;
+    /** @var OrderExportDetailsCollectionFactory */
+    private $orderExportDetailsCollectionFactory;
 
     public function __construct(
-        OrderExportDetailsInterfaceFactory $orderExportDetailsFactory,
-        OrderExportDetails $orderExportDetailsResource,
+        OrderExportDetailsCollectionFactory $orderExportDetailsCollectionFactory,
         string $name = null
     ) {
         parent::__construct($name);
-        $this->orderExportDetailsFactory = $orderExportDetailsFactory;
-        $this->orderExportDetailsResource = $orderExportDetailsResource;
+        $this->orderExportDetailsCollectionFactory = $orderExportDetailsCollectionFactory;
     }
 
     /**
@@ -42,12 +37,10 @@ class OrderExportTest extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $exportDetails = $this->orderExportDetailsFactory->create();
-
-        // Prerequisite: Create a record with ID 1 in sales_order_export
-        $this->orderExportDetailsResource->load($exportDetails, 1);
-
-        $output->writeln(print_r($exportDetails->getData(), true));
+        $exportDetailsCollection = $this->orderExportDetailsCollectionFactory->create();
+        foreach ($exportDetailsCollection as $exportDetails) {
+            $output->writeln(print_r($exportDetails->getData(), true));
+        }
 
         return 0;
     }
