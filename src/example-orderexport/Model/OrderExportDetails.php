@@ -40,9 +40,21 @@ class OrderExportDetails extends AbstractModel implements OrderExportDetailsInte
         return $this;
     }
 
-    public function getExportedAt(): \DateTime
+    public function getMerchantNotes(): string
     {
-        return new \DateTime($this->getData('exported_at'));
+        return (string)$this->getData('merchant_notes');
+    }
+
+    public function setMerchantNotes(string $merchantNotes): OrderExportDetailsInterface
+    {
+        $this->setData('merchant_notes', $merchantNotes);
+        return $this;
+    }
+
+    public function getExportedAt(): ?\DateTime
+    {
+        $dateStr = $this->getData('exported_at');
+        return ($dateStr) ? new \DateTime($dateStr) : null;
     }
 
     public function setExportedAt(\DateTime $exportedAt): OrderExportDetailsInterface
@@ -54,17 +66,6 @@ class OrderExportDetails extends AbstractModel implements OrderExportDetailsInte
     public function hasBeenExported(): bool
     {
         return (bool)$this->getData('exported_at');
-    }
-
-    public function getMerchantNotes(): string
-    {
-        return (string)$this->getData('merchant_notes');
-    }
-
-    public function setMerchantNotes(string $merchantNotes): OrderExportDetailsInterface
-    {
-        $this->setData('merchant_notes', $merchantNotes);
-        return $this;
     }
 
     public function getArchived(): bool

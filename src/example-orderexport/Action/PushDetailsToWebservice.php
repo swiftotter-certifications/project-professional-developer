@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace SwiftOtter\OrderExport\Action;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Magento\Framework\Exception\LocalizedException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -33,7 +34,8 @@ class PushDetailsToWebservice
     }
 
     /**
-     * @throws \Throwable
+     * @throws GuzzleException
+     * @throws LocalizedException
      */
     public function execute(array $orderDetails): bool
     {
@@ -57,7 +59,7 @@ class PushDetailsToWebservice
 
             $response = $client->post($apiUrl, $options);
             $this->processResponse($response);
-        } catch (\Throwable $ex) {
+        } catch (GuzzleException | LocalizedException $ex) {
             $this->logger->error($ex->getMessage(), [
                 'details' => $orderDetails
             ]);
