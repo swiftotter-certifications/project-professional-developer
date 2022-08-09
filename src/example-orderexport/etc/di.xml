@@ -45,4 +45,19 @@
                 type="SwiftOtter\OrderExport\Model\OrderExportDetailsRepository" />
     <preference for="SwiftOtter\OrderExport\Api\Data\OrderExportDetailsSearchResultsInterface"
                 type="SwiftOtter\OrderExport\Model\OrderExportDetailsSearchResults" />
+
+    <virtualType name="SwiftOtter\OrderExport\Virtual\Model\Api\SearchCriteria\DetailsCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor</item>
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="SwiftOtter\OrderExport\Model\OrderExportDetailsRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">SwiftOtter\OrderExport\Virtual\Model\Api\SearchCriteria\DetailsCollectionProcessor</argument>
+        </arguments>
+    </type>
 </config>

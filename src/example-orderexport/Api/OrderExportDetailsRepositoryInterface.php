@@ -7,7 +7,9 @@ declare(strict_types=1);
 
 namespace SwiftOtter\OrderExport\Api;
 
+use Magento\Framework\Api\SearchCriteriaInterface;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface;
+use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsSearchResultsInterface;
 
 interface OrderExportDetailsRepositoryInterface
 {
@@ -39,4 +41,10 @@ interface OrderExportDetailsRepositoryInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function deleteById(int $detailsId): bool;
+
+    /**
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @return \SwiftOtter\OrderExport\Api\Data\OrderExportDetailsSearchResultsInterface
+     */
+    public function getList(SearchCriteriaInterface $searchCriteria): OrderExportDetailsSearchResultsInterface;
 }
