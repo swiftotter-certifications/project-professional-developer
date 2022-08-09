@@ -34,7 +34,7 @@ class ArchiveExports
     /**
      * @throws \Exception
      */
-    public function execute(): ArchiveExports
+    public function execute(): void
     {
         $expDate = (new \DateTime())
             ->setTimezone(new \DateTimeZone('UTC'))
@@ -48,7 +48,5 @@ class ArchiveExports
             $order->setArchived(true);
             $this->orderExportDetailsRepository->save($order);
         }
-
-        return $this;
     }
 }
