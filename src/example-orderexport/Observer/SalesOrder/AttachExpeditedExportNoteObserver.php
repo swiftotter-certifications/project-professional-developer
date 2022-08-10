@@ -9,16 +9,17 @@ namespace SwiftOtter\OrderExport\Observer\SalesOrder;
 
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Sales\Api\Data\OrderInterface;
-use SwiftOtter\OrderExport\Action\AttachExpeditedExportNote as AttachExpeditedNoteAction;
+use SwiftOtter\OrderExport\Action\AttachExpeditedExportNote;
 
-class AttachExpeditedExportNote implements ObserverInterface
+class AttachExpeditedExportNoteObserver implements ObserverInterface
 {
-    /** @var AttachExpeditedNoteAction */
+    /** @var AttachExpeditedExportNote */
     private $attachExpeditedExportNote;
 
     public function __construct(
-        AttachExpeditedNoteAction $attachExpeditedExportNote
+        AttachExpeditedExportNote $attachExpeditedExportNote
     ) {
         $this->attachExpeditedExportNote = $attachExpeditedExportNote;
     }
@@ -34,6 +35,10 @@ class AttachExpeditedExportNote implements ObserverInterface
             return;
         }
 
-        $this->attachExpeditedExportNote->execute($order);
+        try {
+            $this->attachExpeditedExportNote->execute($order);
+        } catch (LocalizedException $e) {
+            // Fail silently in observer context
+        }
     }
 }

@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace SwiftOtter\OrderExport\Action;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Store\Model\ScopeInterface;
 use Psr\Log\LoggerInterface;
@@ -44,15 +45,18 @@ class AttachExpeditedExportNote
         $this->logger = $logger;
     }
 
-    public function execute(OrderInterface $order): void
+    /**
+     * @throws LocalizedException
+     */
+    public function execute(OrderInterface $order): bool
     {
         if ($this->config->isEnabled(ScopeInterface::SCOPE_STORE, $order->getStoreId())) {
-            return;
+            return true;
         }
 
         $expeditedSkus = $this->config->getExpeditedSkus(ScopeInterface::SCOPE_STORE, (string) $order->getStoreId());
         if (empty($expeditedSkus)) {
-            return;
+            return true;
         }
 
         $expedited = false;
@@ -78,7 +82,11 @@ class AttachExpeditedExportNote
                 $this->exportDetailsRepository->save($exportDetails);
             } catch (\Exception $e) {
                 $this->logger->error($e->getMessage());
+                // TODO Re-try logic or error e-mail?
+                throw new LocalizedException(__('Expedited note could not be saved for order #%1', $order->getIncrementId()));
             }
         }
+
+        return true;
     }
 }
