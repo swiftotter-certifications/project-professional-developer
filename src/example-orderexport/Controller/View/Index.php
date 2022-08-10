@@ -13,7 +13,6 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\Forward;
 use Magento\Framework\Controller\Result\ForwardFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Sales\Api\Data\OrderInterface;
@@ -45,10 +44,6 @@ class Index implements ActionInterface, HttpGetActionInterface
      */
     private $orderAuthorization;
     /**
-     * @var UrlInterface
-     */
-    private $urlBuilder;
-    /**
      * @var Config
      */
     private $config;
@@ -59,7 +54,6 @@ class Index implements ActionInterface, HttpGetActionInterface
         ForwardFactory $forwardFactory,
         OrderRepositoryInterface $orderRepository,
         OrderViewAuthorizationInterface $orderAuthorization,
-        UrlInterface $urlBuilder,
         Config $config
     ) {
         $this->pageFactory = $pageFactory;
@@ -67,7 +61,6 @@ class Index implements ActionInterface, HttpGetActionInterface
         $this->forwardFactory = $forwardFactory;
         $this->orderRepository = $orderRepository;
         $this->orderAuthorization = $orderAuthorization;
-        $this->urlBuilder = $urlBuilder;
         $this->config = $config;
     }
 
