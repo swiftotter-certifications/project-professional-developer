@@ -4,3 +4,9 @@ NOTE: This package is a complete example of the OrderExport module and is intend
 you intend to follow along with the training course and build the module yourself.
 
 Export orders to the merchant ERP.
+
+## Store Configuration
+
+At Stores > Configuration > Sales > Sales > Order Export:
+
+* **Enabled**
