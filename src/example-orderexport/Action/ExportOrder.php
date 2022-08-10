@@ -13,6 +13,7 @@ use Magento\Store\Model\ScopeInterface;
 use SwiftOtter\OrderExport\Model\HeaderData;
 use SwiftOtter\OrderExport\Model\Config;
 use Magento\Framework\Exception\NoSuchEntityException;
+use SwiftOtter\OrderExport\Action\PushDetailsToWebservice;
 
 class ExportOrder
 {
@@ -22,15 +23,19 @@ class ExportOrder
     private $config;
     /** @var CollectOrderData */
     private $collectOrderData;
+    /** @var \SwiftOtter\OrderExport\Action\PushDetailsToWebservice */
+    private $pushDetailsToWebservice;
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
         Config $config,
-        CollectOrderData $collectOrderData
+        CollectOrderData $collectOrderData,
+        PushDetailsToWebservice $pushDetailsToWebservice
     ) {
         $this->orderRepository = $orderRepository;
         $this->config = $config;
         $this->collectOrderData = $collectOrderData;
+        $this->pushDetailsToWebservice = $pushDetailsToWebservice;
     }
 
     /**
@@ -48,7 +53,9 @@ class ExportOrder
         $results = ['success' => false, 'error' => null];
 
         $exportData = $this->collectOrderData->execute($order, $headerData);
-        // TODO Export to web service, save export details
+
+        $results['success'] = $this->pushDetailsToWebservice->execute($exportData, $order);
+        // TODO Save export details
 
         return $results;
     }
