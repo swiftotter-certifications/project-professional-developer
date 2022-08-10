@@ -46,16 +46,13 @@ class SaveExportDetailsToOrder
     {
         $order = $this->orderRepository->get($orderId);
         $orderExts = $order->getExtensionAttributes();
-        if ($orderExts) {
-            /** @var OrderExportDetailsInterface $details */
-            $details = $orderExts->getExportDetails();
-        } else {
-            /** @var OrderExportDetailsInterface $details */
-            $details = $this->exportDetailsFactory->create();
-        }
 
-        if (!$details->getOrderId()) {
-            $details->setOrderId($orderId);
+        /** @var OrderExportDetailsInterface $details */
+        $details = $orderExts->getExportDetails();
+        if (!$details) {
+            $details = $this->exportDetailsFactory->create();
+            $details->setOrderId((int)$order->getEntityId());
+            $orderExts->setExportDetails($details);
         }
 
         if (isset($results['success']) && $results['success'] === true) {
