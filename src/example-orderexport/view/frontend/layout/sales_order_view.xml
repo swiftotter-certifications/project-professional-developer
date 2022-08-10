@@ -3,7 +3,11 @@
     <body>
         <referenceContainer name="order.actions.container">
             <block name="sales.order.export.link" after="sales.order.info.buttons" ifconfig="sales/order_export/enabled"
-                   template="SwiftOtter_OrderExport::order/order_export_link.phtml" />
+                   template="SwiftOtter_OrderExport::order/order_export_link.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">SwiftOtter\OrderExport\ViewModel\OrderExportLink</argument>
+                </arguments>
+            </block>
         </referenceContainer>
     </body>
 </page>
