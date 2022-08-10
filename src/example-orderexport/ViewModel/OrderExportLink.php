@@ -36,7 +36,7 @@ class OrderExportLink implements ArgumentInterface
         return $this->urlBuilder->getUrl(
             'order_export/view/index',
             [
-                'order_id' => $orderId,
+                'order_id' => (int) $orderId,
             ]
         );
     }
