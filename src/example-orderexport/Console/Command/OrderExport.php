@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace SwiftOtter\OrderExport\Console\Command;
 
+use Magento\Framework\Exception\NoSuchEntityException;
+use SwiftOtter\OrderExport\Action\CollectOrderData;
 use SwiftOtter\OrderExport\Model\HeaderData;
 use SwiftOtter\OrderExport\Model\HeaderDataFactory;
 use Symfony\Component\Console\Command\Command;
@@ -23,13 +25,17 @@ class OrderExport extends Command
 
     /** @var HeaderDataFactory */
     private $headerDataFactory;
+    /** @var CollectOrderData */
+    private $collectOrderData;
 
     public function __construct(
         HeaderDataFactory $headerDataFactory,
+        CollectOrderData $collectOrderData,
         string $name = null
     ) {
         parent::__construct($name);
         $this->headerDataFactory = $headerDataFactory;
+        $this->collectOrderData = $collectOrderData;
     }
 
     /**
@@ -59,9 +65,7 @@ class OrderExport extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
+     * @throws NoSuchEntityException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -78,7 +82,9 @@ class OrderExport extends Command
             $headerData->setMerchantNotes($notes);
         }
 
-        $output->writeln(print_r($headerData, true));
+        $orderData = $this->collectOrderData->execute($orderId, $headerData);
+
+        $output->writeln(print_r($orderData, true));
 
         return 0;
     }
