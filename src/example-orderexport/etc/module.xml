@@ -3,6 +3,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
     <module name="SwiftOtter_OrderExport">
         <sequence>
+            <module name="Magento_Eav" />
             <module name="Magento_Sales" />
         </sequence>
     </module>
