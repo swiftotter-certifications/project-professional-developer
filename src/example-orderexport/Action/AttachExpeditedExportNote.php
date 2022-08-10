@@ -18,8 +18,6 @@ use SwiftOtter\OrderExport\Model\Config;
 
 class AttachExpeditedExportNote
 {
-    const EXPEDITED_MSG = 'Order contains expedited items';
-
     /** @var Config */
     private $config;
     /** @var GetOrderExportItems */
@@ -55,7 +53,8 @@ class AttachExpeditedExportNote
         }
 
         $expeditedSkus = $this->config->getExpeditedSkus(ScopeInterface::SCOPE_STORE, (string) $order->getStoreId());
-        if (empty($expeditedSkus)) {
+        $expeditedSkusNote = $this->config->getExpeditedSkusNote(ScopeInterface::SCOPE_STORE, (string) $order->getStoreId());
+        if (empty($expeditedSkus) || empty($expeditedSkusNote)) {
             return true;
         }
 
@@ -78,7 +77,7 @@ class AttachExpeditedExportNote
                     $orderExts->setExportDetails($exportDetails);
                 }
 
-                $exportDetails->setMerchantNotes((string)__(self::EXPEDITED_MSG));
+                $exportDetails->setMerchantNotes((string) __($expeditedSkusNote));
                 $this->exportDetailsRepository->save($exportDetails);
             } catch (\Exception $e) {
                 $this->logger->error($e->getMessage());

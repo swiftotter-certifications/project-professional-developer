@@ -8,6 +8,7 @@
                 <api_url>https://app.training-2-4.test/mock_erp_api</api_url>
                 <api_token backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
                 <expedited_skus>24-MB01,24-MG03,24-WG084</expedited_skus>
+                <expedited_skus_note>Order contains expedited items</expedited_skus_note>
             </order_export>
         </sales>
     </default>
