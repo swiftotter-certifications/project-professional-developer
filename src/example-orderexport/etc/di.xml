@@ -41,4 +41,6 @@
 
     <preference for="SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface"
                 type="SwiftOtter\OrderExport\Model\OrderExportDetails" />
+    <preference for="SwiftOtter\OrderExport\Api\OrderExportDetailsRepositoryInterface"
+                type="SwiftOtter\OrderExport\Model\OrderExportDetailsRepository" />
 </config>
