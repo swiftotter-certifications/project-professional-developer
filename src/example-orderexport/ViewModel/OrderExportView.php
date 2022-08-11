@@ -99,7 +99,7 @@ class OrderExportView implements ArgumentInterface
         return $exportDetails;
     }
 
-    private function getOrder(): ?OrderInterface
+    public function getOrder(): ?OrderInterface
     {
         if ($this->order === null) {
             $orderId = (int) $this->request->getParam('order_id');
