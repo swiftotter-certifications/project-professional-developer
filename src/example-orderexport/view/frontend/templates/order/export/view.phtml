@@ -1,0 +1,45 @@
+<?php
+/**
+ * @by SwiftOtter, Inc.
+ * @website https://swiftotter.com
+ **/
+
+/** @var \Magento\Framework\View\Element\Template $block */
+
+/** @var \SwiftOtter\OrderExport\ViewModel\OrderExportView $viewModel */
+$viewModel = $block->getData('view_model');
+$exportDetails = $viewModel->getOrderExportDetails();
+$shipOn = ($exportDetails !== null) ? $exportDetails->getShipOn() : null;
+
+$backUrl = $viewModel->getOrderViewUrl();
+if ($backUrl):
+    ?>
+
+    <p class="back-link">
+        <a href="<?= $backUrl ?>"><?= __('Back to Order') ?></a>
+    </p>
+
+<?php
+endif;
+
+if ($exportDetails === null || !$exportDetails->getId()):
+    ?>
+
+    <p class="no-results">
+        <?= __('No details found') ?>
+    </p>
+
+<?php else: ?>
+
+    <dl class="order-export-details">
+        <dt><?= __('Shipping On') ?></dt>
+        <dd><?= ($shipOn) ? $viewModel->formatDate($shipOn) : '' ?></dd>
+
+        <dt><?= __('Merchant Notes') ?></dt>
+        <dd><?= $exportDetails->getMerchantNotes() ?? '' ?></dd>
+
+        <dt><?= __('Has Been Exported') ?></dt>
+        <dd><?= ($exportDetails->hasBeenExported()) ? __('Yes') : __('No') ?></dd>
+    </dl>
+
+<?php endif; ?>
