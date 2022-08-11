@@ -1,0 +1,13 @@
+@order-export-headers__color: @color-blue3;
+
+& when (@media-common = true) {
+    .order-export-details {
+        dt {
+            color: @order-export-headers__color;
+        }
+
+        dd {
+            margin-left: @indent__base;
+        }
+    }
+}
