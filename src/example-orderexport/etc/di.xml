@@ -4,6 +4,7 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="orderExportRun" xsi:type="object">SwiftOtter\OrderExport\Console\Command\OrderExport</item>
+                <item name="orderExportTest" xsi:type="object">SwiftOtter\OrderExport\Console\Command\OrderExportTest</item>
             </argument>
         </arguments>
     </type>
@@ -58,5 +59,9 @@
         <arguments>
             <argument name="collectionProcessor" xsi:type="object">SwiftOtter\OrderExport\Virtual\Model\Api\SearchCriteria\DetailsCollectionProcessor</argument>
         </arguments>
+    </type>
+
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="load_export_details_into_order" type="SwiftOtter\OrderExport\Plugin\LoadExportDetailsIntoOrder"/>
     </type>
 </config>
