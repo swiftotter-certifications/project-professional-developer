@@ -34,10 +34,15 @@ class SaveExportDetailsToOrder
      */
     public function execute(OrderInterface $order, HeaderData $headerData, array $results): void
     {
-        /** @var OrderExportDetailsInterface $exportDetails */
-        $exportDetails = $this->exportDetailsFactory->create();
+        $orderExts = $order->getExtensionAttributes();
+        $exportDetails = $orderExts->getExportDetails();
 
-        $exportDetails->setOrderId((int) $order->getEntityId());
+        if (!$exportDetails) {
+            /** @var OrderExportDetailsInterface $exportDetails */
+            $exportDetails = $this->exportDetailsFactory->create();
+            $exportDetails->setOrderId((int)$order->getEntityId());
+            $orderExts->setExportDetails($exportDetails);
+        }
 
         $success = $results['success'] ?? false;
         if ($success) {
