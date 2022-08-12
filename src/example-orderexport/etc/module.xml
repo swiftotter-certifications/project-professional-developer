@@ -6,6 +6,7 @@
             <module name="Magento_Eav" />
             <module name="Magento_Catalog" />
             <module name="Magento_Sales" />
+            <module name="SwiftOtter_FulfillmentBlock" />
         </sequence>
     </module>
 </config>
