@@ -16,7 +16,6 @@ use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface;
 use Magento\Framework\View\Page\Config as PageConfig;
-use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterfaceFactory;
 
 class OrderExportView implements ArgumentInterface
 {
@@ -33,16 +32,13 @@ class OrderExportView implements ArgumentInterface
     private $urlBuilder;
     /** @var PageConfig */
     private $pageConfig;
-    /** @var OrderExportDetailsInterfaceFactory */
-    private $orderExportDetailsFactory;
 
     public function __construct(
         RequestInterface $request,
         OrderRepositoryInterface $orderRepository,
         TimezoneInterface $timezone,
         UrlInterface $urlBuilder,
-        PageConfig $pageConfig,
-        OrderExportDetailsInterfaceFactory $orderExportDetailsFactory
+        PageConfig $pageConfig
     ) {
 
         $this->request = $request;
@@ -50,7 +46,6 @@ class OrderExportView implements ArgumentInterface
         $this->timezone = $timezone;
         $this->urlBuilder = $urlBuilder;
         $this->pageConfig = $pageConfig;
-        $this->orderExportDetailsFactory = $orderExportDetailsFactory;
 
         $order = $this->getOrder();
         if ($order) {
@@ -60,13 +55,11 @@ class OrderExportView implements ArgumentInterface
 
     public function getOrderExportDetails(): ?OrderExportDetailsInterface
     {
-        // TODO: Replace with real loaded details
-        $exportDetails = $this->orderExportDetailsFactory->create();
-        $exportDetails->setMerchantNotes('This is a static example')
-            ->setExportedAt(new \DateTime('2022-08-11'))
-            ->setShipOn(new \DateTime('2022-09-01'))
-            ->setId(100);
-        return $exportDetails;
+        $order = $this->getOrder();
+        if ($order === null) {
+            return null;
+        }
+        return $order->getExtensionAttributes()->getExportDetails();
     }
 
     public function getOrder(): ?OrderInterface
