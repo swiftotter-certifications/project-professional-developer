@@ -9,10 +9,12 @@ namespace SwiftOtter\OrderExport\Plugin;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Sales\Api\Data\OrderInterface;
+use Magento\Sales\Api\Data\OrderSearchResultInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface;
 use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterfaceFactory;
 use SwiftOtter\OrderExport\Api\OrderExportDetailsRepositoryInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
 
 class LoadExportDetailsIntoOrder
 {
@@ -42,14 +44,34 @@ class LoadExportDetailsIntoOrder
         OrderInterface $order,
         $id
     ) {
+        $this->setExportDetails($order);
+        return $order;
+    }
+
+    /**
+     * @param SearchCriteriaInterface $searchCriteria
+     */
+    public function afterGetList(
+        OrderRepositoryInterface $subject,
+        OrderSearchResultInterface $result,
+        SearchCriteriaInterface $searchCriteria
+    ) {
+        foreach ($result->getItems() as $order) {
+            $this->setExportDetails($order);
+        }
+        return $result;
+    }
+
+    private function setExportDetails(OrderInterface $order): void
+    {
         $extensionAttributes = $order->getExtensionAttributes();
 
         $exportDetails = $extensionAttributes->getExportDetails();
         if ($exportDetails) {
-            return $order;
+            return;
         }
 
-        $this->searchCriteriaBuilder->addFilter('order_id', $id);
+        $this->searchCriteriaBuilder->addFilter('order_id', $order->getEntityId());
         $exportDetailsList = $this->exportDetailsRepository->getList($this->searchCriteriaBuilder->create())->getItems();
 
         if (count($exportDetailsList) > 0) {
@@ -59,7 +81,5 @@ class LoadExportDetailsIntoOrder
             $exportDetails = $this->exportDetailsFactory->create();
             $extensionAttributes->setExportDetails($exportDetails);
         }
-
-        return $order;
     }
 }

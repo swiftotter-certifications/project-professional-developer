@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace SwiftOtter\OrderExport\Console\Command;
 
+use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,13 +19,17 @@ class OrderExportTest extends Command
 {
     /** @var OrderRepositoryInterface */
     private $orderRepository;
+    /** @var SearchCriteriaBuilder */
+    private $searchCriteriaBuilder;
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
+        SearchCriteriaBuilder $searchCriteriaBuilder,
         string $name = null
     ) {
         parent::__construct($name);
         $this->orderRepository = $orderRepository;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
     protected function configure()
@@ -35,11 +40,14 @@ class OrderExportTest extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $order = $this->orderRepository->get(5);
-        $extAttrs = $order->getExtensionAttributes();
-        $exportDetails = $extAttrs->getExportDetails();
-        if ($exportDetails) {
-            $output->writeln(print_r($exportDetails->getData(), true));
+        $this->searchCriteriaBuilder->setPageSize(5);
+        $orders = $this->orderRepository->getList($this->searchCriteriaBuilder->create())->getItems();
+        foreach ($orders as $order) {
+            $extAttrs = $order->getExtensionAttributes();
+            $exportDetails = $extAttrs->getExportDetails();
+            if ($exportDetails) {
+                $output->writeln(print_r($exportDetails->getData(), true));
+            }
         }
     }
 }
