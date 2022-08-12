@@ -55,10 +55,10 @@ class LoadExportDetailsIntoOrder
      * @return OrderInterface
      */
     public function afterGet(
-        OrderRepositoryInterface $orderRepository,
+        OrderRepositoryInterface $subject,
         $order
     ) {
-        $this->setExtensionAttributes($order);
+        $this->setExportDetails($order);
 
         return $order;
     }
@@ -72,32 +72,34 @@ class LoadExportDetailsIntoOrder
         $searchResult
     ) {
         foreach ($searchResult->getItems() as $order) {
-            $this->setExtensionAttributes($order);
+            $this->setExportDetails($order);
         }
 
         return $searchResult;
     }
 
-    private function setExtensionAttributes(OrderInterface $order): void
+    private function setExportDetails(OrderInterface $order): void
     {
         $extensionAttributes = $order->getExtensionAttributes();
-        if (!$extensionAttributes) {
-            $extensionAttributes = $this->extensionFactory->create();
-            $order->setExtensionAttributes($extensionAttributes);
+
+        /** @var OrderExportDetailsInterface $exportDetails */
+        $exportDetails = $extensionAttributes->getExportDetails();
+        if ($exportDetails) {
+            return;
         }
 
-        $details = $this->orderExportDetailsRepository->getList(
+        $exportDetailsList = $this->orderExportDetailsRepository->getList(
             $this->searchCriteriaBuilder
                 ->addFilter('order_id', $order->getEntityId())
                 ->create()
         )->getItems();
 
-        if (count($details)) {
-            $extensionAttributes->setExportDetails(reset($details));
+        if (count($exportDetailsList) > 0) {
+            $extensionAttributes->setExportDetails(reset($exportDetailsList));
         } else {
             /** @var OrderExportDetailsInterface $details */
-            $details = $this->detailsFactory->create();
-            $extensionAttributes->setExportDetails($details);
+            $exportDetails = $this->detailsFactory->create();
+            $extensionAttributes->setExportDetails($exportDetails);
         }
     }
 }

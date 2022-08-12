@@ -89,14 +89,7 @@ class OrderExportView implements ArgumentInterface
         if ($order === null) {
             return null;
         }
-        $orderExts = $order->getExtensionAttributes();
-        if ($orderExts === null) {
-            return null;
-        }
-
-        /** @var OrderExportDetailsInterface $exportDetails */
-        $exportDetails = $orderExts->getExportDetails();
-        return $exportDetails;
+        return $order->getExtensionAttributes()->getExportDetails();
     }
 
     public function getOrder(): ?OrderInterface
