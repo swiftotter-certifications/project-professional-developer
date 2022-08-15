@@ -16,7 +16,7 @@
                                                     <item name="sortOrder" xsi:type="string">5</item>
                                                     <item name="config" xsi:type="array">
                                                         <item name="template" xsi:type="string">SwiftOtter_OrderExport/checkout/fulfillment-notice</item>
-                                                        <item name="noticeContent" xsi:type="string">Hello world from a component</item>
+                                                        <item name="noticeContent" xsi:type="string" />
                                                     </item>
                                                 </item>
                                             </item>
