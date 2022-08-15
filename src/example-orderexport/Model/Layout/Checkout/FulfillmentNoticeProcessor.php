@@ -8,17 +8,23 @@ declare(strict_types=1);
 namespace SwiftOtter\OrderExport\Model\Layout\Checkout;
 
 use Magento\Checkout\Block\Checkout\LayoutProcessorInterface;
+use Magento\Framework\View\LayoutInterface;
 use SwiftOtter\OrderExport\Model\Config;
+use Magento\Cms\Block\BlockByIdentifier;
 
 class FulfillmentNoticeProcessor implements LayoutProcessorInterface
 {
     /** @var Config */
     private $config;
+    /** @var LayoutInterface */
+    private $layout;
 
     public function __construct(
-        Config $config
+        Config $config,
+        LayoutInterface $layout
     ) {
         $this->config = $config;
+        $this->layout = $layout;
     }
 
     /**
@@ -30,8 +36,12 @@ class FulfillmentNoticeProcessor implements LayoutProcessorInterface
             return $jsLayout;
         }
 
+        $fulfillmentBlock = $this->layout->createBlock(BlockByIdentifier::class);
+        $fulfillmentBlock->setData('identifier', 'fulfillment-notice');
+        $fulfillmentBlockOutput = $fulfillmentBlock->toHtml();
+
         $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']['children']
-        ['fulfillmentNotice']['config']['noticeContent'] = __('Hello World from a LayoutProcessor');
+        ['fulfillmentNotice']['config']['noticeContent'] = $fulfillmentBlockOutput;
 
         return $jsLayout;
     }
