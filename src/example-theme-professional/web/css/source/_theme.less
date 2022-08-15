@@ -1,10 +1,5 @@
-// /**
-//  * Copyright © Magento, Inc. All rights reserved.
-//  * See COPYING.txt for license details.
-//  */
-
 //
-//  Luma theme overrides
+//  Theme overrides
 //  _____________________________________________
 
 //  Theme file should contain declarations (overrides) ONLY OF EXISTING variables
@@ -18,6 +13,9 @@
 //  Fonts
 @icons__font-path: '@{baseDir}fonts/Luma-Icons';
 @icons__font-name: 'luma-icons';
+
+// Colors
+@theme__color__secondary: #449944;
 
 //  Color nesting
 @panel__background-color: @color-gray-light0;
@@ -294,3 +292,6 @@
 //  ---------------------------------------------
 
 @copyright__background-color: @color-gray-middle4;
+
+// Order Export
+@order-export-headers__color: @theme__color__secondary;
