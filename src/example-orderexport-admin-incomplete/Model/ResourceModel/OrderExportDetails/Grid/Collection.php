@@ -7,27 +7,32 @@ declare(strict_types = 1);
 
 namespace SwiftOtter\OrderExportAdmin\Model\ResourceModel\OrderExportDetails\Grid;
 
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
 use Magento\Framework\Api\Search\AggregationInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
+use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
+use Magento\Framework\Data\Collection\EntityFactoryInterface;
 use Magento\Framework\Event\ManagerInterface;
+use Psr\Log\LoggerInterface;
 use SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails\Collection as OrderExportDetailsCollection;
 use SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails as OrderExportDetailsResource;
 
 class Collection extends OrderExportDetailsCollection implements SearchResultInterface
 {
-    /**
-     * @var AggregationInterface
-     */
-    protected $aggregations;
+    /** @var AggregationInterface */
+    private $aggregations;
 
     public function __construct(
-        \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory,
-        \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy,
+        EntityFactoryInterface $entityFactory,
+        LoggerInterface $logger,
+        FetchStrategyInterface $fetchStrategy,
         ManagerInterface $eventManager,
-        $model = \Magento\Framework\View\Element\UiComponent\DataProvider\Document::class,
-        \Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
-        \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
+        $model = Document::class,
+        AdapterInterface $connection = null,
+        AbstractDb $resource = null
     ) {
         parent::__construct(
             $entityFactory,
@@ -76,7 +81,7 @@ class Collection extends OrderExportDetailsCollection implements SearchResultInt
     /**
      * {@inheritdoc}
      */
-    public function setSearchCriteria(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria)
+    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria)
     {
         return $this;
     }
