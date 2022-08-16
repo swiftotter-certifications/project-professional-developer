@@ -7,7 +7,7 @@
         <column xsi:type="date" name="ship_on" comment="Shipping on"/>
         <column xsi:type="text" name="merchant_notes" comment="Merchant notes"/>
         <column xsi:type="datetime" name="exported_at" comment="Exported at"/>
-        <column xsi:type="smallint" name="archived" unsigned="false" nullable="false" default="0" comment="Is Archived" />
+        <column xsi:type="smallint" name="archived" unsigned="true" nullable="false" default="0" comment="Is Archived" />
         <constraint xsi:type="foreign"
                     referenceId="SALES_ORDER_EXPORT_ORDER_ID"
                     table="sales_order_export"
