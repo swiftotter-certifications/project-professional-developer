@@ -18,7 +18,7 @@
             </storageConfig>
             <updateUrl path="mui/index/render"/>
         </settings>
-        <aclResource>{RESOURCE}</aclResource>
+        <aclResource>SwiftOtter_OrderExport::OrderExport</aclResource>
         <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="orderexport_detail_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
