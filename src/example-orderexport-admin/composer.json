@@ -1,0 +1,18 @@
+{
+    "name": "swiftotter/module-orderexport-admin",
+    "description": "",
+    "type": "magento2-module",
+    "require": {
+        "magento/framework": "^103",
+        "swiftotter/module-orderexport": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "SwiftOtter\\OrderExportAdmin\\": ""
+        }
+    }
+}
+
