@@ -101,4 +101,13 @@ class Collection extends OrderExportDetailsCollection implements SearchResultInt
     {
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSelect()
+    {
+        $this->addFieldToFilter('archived', 0);
+        return parent::getSelect();
+    }
 }
