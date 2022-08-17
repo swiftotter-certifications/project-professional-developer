@@ -46,16 +46,16 @@ class AttachExpeditedExportNote
     /**
      * @throws LocalizedException
      */
-    public function execute(OrderInterface $order): bool
+    public function execute(OrderInterface $order): void
     {
         if ($this->config->isEnabled(ScopeInterface::SCOPE_STORE, $order->getStoreId())) {
-            return true;
+            return;
         }
 
         $expeditedSkus = $this->config->getExpeditedSkus(ScopeInterface::SCOPE_STORE, (string) $order->getStoreId());
         $expeditedSkusNote = $this->config->getExpeditedSkusNote(ScopeInterface::SCOPE_STORE, (string) $order->getStoreId());
         if (empty($expeditedSkus) || empty($expeditedSkusNote)) {
-            return true;
+            return;
         }
 
         $expedited = false;
@@ -85,7 +85,5 @@ class AttachExpeditedExportNote
                 throw new LocalizedException(__('Expedited note could not be saved for order #%1', $order->getIncrementId()));
             }
         }
-
-        return true;
     }
 }
