@@ -77,7 +77,7 @@
             <settings>
                 <filter>dateRange</filter>
                 <dataType>date</dataType>
-                <dateFormat>MM/d/YYYY</dateFormat>
+                <dateFormat>MM/dd/YYYY</dateFormat>
                 <label translate="true">Exported At</label>
             </settings>
         </column>

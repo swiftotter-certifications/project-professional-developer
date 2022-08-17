@@ -32,7 +32,7 @@ class ArchiveExports
     }
 
     /**
-     * @throws \Exception
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
     public function execute(): void
     {
