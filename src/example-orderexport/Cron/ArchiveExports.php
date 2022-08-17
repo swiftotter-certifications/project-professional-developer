@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace SwiftOtter\OrderExport\Cron;
 
 use SwiftOtter\OrderExport\Action\ArchiveExports as ArchiveExportsAction;
+use Magento\Framework\Exception\CouldNotSaveException;
 
 class ArchiveExports
 {
@@ -20,6 +21,9 @@ class ArchiveExports
         $this->archiveExports = $archiveExports;
     }
 
+    /**
+     * @throws CouldNotSaveException
+     */
     public function execute(): void
     {
         $this->archiveExports->execute();
