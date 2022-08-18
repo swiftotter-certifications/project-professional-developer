@@ -40,9 +40,10 @@ class SaveExportDetailsToOrder
         if (!$exportDetails) {
             /** @var OrderExportDetailsInterface $exportDetails */
             $exportDetails = $this->exportDetailsFactory->create();
-            $exportDetails->setOrderId((int)$order->getEntityId());
             $orderExts->setExportDetails($exportDetails);
         }
+        
+        $exportDetails->setOrderId((int)$order->getEntityId());
 
         $success = $results['success'] ?? false;
         if ($success) {
