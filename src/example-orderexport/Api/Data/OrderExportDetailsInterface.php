@@ -28,4 +28,8 @@ interface OrderExportDetailsInterface
     public function setExportedAt(\DateTime $exportedAt): OrderExportDetailsInterface;
 
     public function hasBeenExported(): bool;
+
+    public function getArchived(): bool;
+
+    public function setArchived(bool $archived): OrderExportDetailsInterface;
 }

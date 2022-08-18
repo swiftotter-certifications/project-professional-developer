@@ -5,7 +5,8 @@
             "order_id": true,
             "ship_on": true,
             "merchant_notes": true,
-            "exported_at": true
+            "exported_at": true,
+            "archived": true
         },
         "constraint": {
             "PRIMARY": true,
