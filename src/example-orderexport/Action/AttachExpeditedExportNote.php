@@ -77,7 +77,7 @@ class AttachExpeditedExportNote
                     $orderExts->setExportDetails($exportDetails);
                 }
 
-                $exportDetails->setMerchantNotes((string) __($expeditedSkusNote));
+                $exportDetails->setMerchantNotes($expeditedSkusNote);
                 $this->exportDetailsRepository->save($exportDetails);
             } catch (\Exception $e) {
                 $this->logger->error($e->getMessage());
