@@ -22,6 +22,19 @@
                         <field id="enabled">1</field>
                     </depends>
                 </field>
+                <field id="expedited_skus" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Expedited SKUs</label>
+                    <comment>Comma-separated list</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="expedited_skus_note" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Expedited SKUs Merchant Note</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
             </group>
         </section>
     </system>
