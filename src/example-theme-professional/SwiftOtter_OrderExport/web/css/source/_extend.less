@@ -1,0 +1,21 @@
+& when (@media-common = true) {
+
+    .order-export-details {
+        .lib-clearfix();
+
+        dt, dd {
+            float: left;
+        }
+
+        dt {
+            width: 20%;
+            clear: both;
+            text-transform: uppercase;
+
+            &::after {
+                content: ':';
+            }
+        }
+    }
+
+}

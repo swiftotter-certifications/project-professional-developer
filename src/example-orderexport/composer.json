@@ -1,0 +1,24 @@
+{
+    "name": "swiftotter/module-orderexport",
+    "description": "",
+    "type": "magento2-module",
+    "require": {
+        "magento/framework": "^103",
+        "magento/module-eav": "^102",
+        "magento/module-catalog": "^104",
+        "magento/module-cms": "^104",
+        "magento/module-sales":  "^103",
+        "magento/module-checkout": "^100",
+        "guzzlehttp/guzzle": "^7.4",
+        "swiftotter/module-fulfillment-block": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "SwiftOtter\\OrderExport\\": ""
+        }
+    }
+}
+

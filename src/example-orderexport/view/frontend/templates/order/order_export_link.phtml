@@ -1,0 +1,12 @@
+<?php
+/**
+ * @by SwiftOtter, Inc.
+ * @website https://swiftotter.com
+ **/
+
+/** @var \Magento\Framework\View\Element\Template $block */
+
+/** @var \SwiftOtter\OrderExport\ViewModel\OrderExportLink $viewModel */
+$viewModel = $block->getData('view_model');
+?>
+<a href="<?= $viewModel->getOrderExportUrl() ?>"><?= __('Export Details') ?></a>

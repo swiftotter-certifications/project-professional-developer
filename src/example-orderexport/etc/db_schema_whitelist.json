@@ -1,0 +1,16 @@
+{
+    "sales_order_export": {
+        "column": {
+            "id": true,
+            "order_id": true,
+            "ship_on": true,
+            "merchant_notes": true,
+            "exported_at": true,
+            "archived": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "SALES_ORDER_EXPORT_ORDER_ID_SALES_ORDER_ENTITY_ID": true
+        }
+    }
+}

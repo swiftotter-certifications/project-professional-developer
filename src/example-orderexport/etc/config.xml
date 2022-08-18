@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <sales>
+            <order_export>
+                <enabled>1</enabled>
+                <api_url>https://app.training-2-4.test/mock_erp_api</api_url>
+                <api_token backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <expedited_skus>24-MB01,24-MG03,24-WG084</expedited_skus>
+                <expedited_skus_note>Order contains expedited items</expedited_skus_note>
+            </order_export>
+        </sales>
+    </default>
+</config>
