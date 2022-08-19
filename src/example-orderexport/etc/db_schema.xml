@@ -8,8 +8,8 @@
                 comment="Order ID"/>
         <column xsi:type="date" name="ship_on" comment="Shipping on" />
         <column xsi:type="text" name="merchant_notes" comment="Merchant notes" />
-        <column xsi:type="timestamp" name="exported_at" nullable="false"
-                comment="Exported at" />
+        <column xsi:type="timestamp" name="exported_at" nullable="true"
+                default="NULL" comment="Exported at" />
         <column xsi:type="smallint" name="archived" unsigned="true" nullable="false"
                 default="0" comment="Is Archived" />
         <constraint xsi:type="primary" referenceId="PRIMARY">
