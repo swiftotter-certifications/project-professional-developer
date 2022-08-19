@@ -8,7 +8,7 @@
                 comment="Order ID"/>
         <column xsi:type="date" name="ship_on" comment="Shipping on" />
         <column xsi:type="text" name="merchant_notes" comment="Merchant notes" />
-        <column xsi:type="timestamp" name="exported_at" nullable="false"
+        <column xsi:type="timestamp" name="exported_at" nullable="true"
                 comment="Exported at" />
         <column xsi:type="smallint" name="archived" unsigned="true" nullable="false"
                 default="0" comment="Is Archived" />
