@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /**
- * @by SwiftOtter, Inc. 12/31/19
+ * @by SwiftOtter, Inc.
  * @website https://swiftotter.com
  **/
 
@@ -12,16 +12,12 @@ use Magento\Framework\Api\SearchResultsInterface;
 interface OrderExportDetailsSearchResultsInterface extends SearchResultsInterface
 {
     /**
-     * Get details list.
-     *
      * @return \SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface[]
      */
     public function getItems();
 
     /**
-     * Set details list.
-     *
-     * @param [] $items
+     * @param \SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface[] $items
      * @return $this
      */
     public function setItems(array $items);

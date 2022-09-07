@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /**
- * @by SwiftOtter, Inc. 12/31/19
+ * @by SwiftOtter, Inc.
  * @website https://swiftotter.com
  **/
 
@@ -12,8 +12,9 @@ use Magento\Sales\Api\Data\OrderExtensionInterfaceFactory;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderSearchResultInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use SwiftOtter\OrderExport\Model\OrderExportDetailsFactory;
-use SwiftOtter\OrderExport\Model\OrderExportDetailsRepository;
+use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterface;
+use SwiftOtter\OrderExport\Api\Data\OrderExportDetailsInterfaceFactory;
+use SwiftOtter\OrderExport\Api\OrderExportDetailsRepositoryInterface;
 
 class LoadExportDetailsIntoOrder
 {
@@ -28,20 +29,20 @@ class LoadExportDetailsIntoOrder
     private $searchCriteriaBuilder;
 
     /**
-     * @var OrderExportDetailsRepository
+     * @var OrderExportDetailsRepositoryInterface
      */
     private $orderExportDetailsRepository;
 
     /**
-     * @var OrderExportDetailsFactory
+     * @var OrderExportDetailsInterfaceFactory
      */
     private $detailsFactory;
 
     public function __construct(
         OrderExtensionInterfaceFactory $extension,
         SearchCriteriaBuilder $searchCriteriaBuilder,
-        OrderExportDetailsRepository $orderExportDetailsRepository,
-        OrderExportDetailsFactory $detailsFactory
+        OrderExportDetailsRepositoryInterface $orderExportDetailsRepository,
+        OrderExportDetailsInterfaceFactory $detailsFactory
     ) {
         $this->extensionFactory = $extension;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
@@ -49,40 +50,56 @@ class LoadExportDetailsIntoOrder
         $this->detailsFactory = $detailsFactory;
     }
 
+    /**
+     * @param OrderInterface $order
+     * @return OrderInterface
+     */
     public function afterGet(
-        OrderRepositoryInterface $orderRepository,
-        OrderInterface $order
+        OrderRepositoryInterface $subject,
+        $order
     ) {
-        $this->setExtensionAttributes($order);
+        $this->setExportDetails($order);
 
         return $order;
     }
 
-    public function afterGetList(OrderRepositoryInterface $orderRepository, OrderSearchResultInterface $searchResult)
-    {
+    /**
+     * @param OrderSearchResultInterface $searchResult
+     * @return OrderSearchResultInterface
+     */
+    public function afterGetList(
+        OrderRepositoryInterface $orderRepository,
+        $searchResult
+    ) {
         foreach ($searchResult->getItems() as $order) {
-            $this->setExtensionAttributes($order);
+            $this->setExportDetails($order);
         }
 
         return $searchResult;
     }
 
-    private function setExtensionAttributes(OrderInterface $order): void
+    private function setExportDetails(OrderInterface $order): void
     {
-        $extensionAttributes = $order->getExtensionAttributes() ?? $this->extensionFactory->create();
+        $extensionAttributes = $order->getExtensionAttributes();
 
-        $details = $this->orderExportDetailsRepository->getList(
+        /** @var OrderExportDetailsInterface $exportDetails */
+        $exportDetails = $extensionAttributes->getExportDetails();
+        if ($exportDetails) {
+            return;
+        }
+
+        $exportDetailsList = $this->orderExportDetailsRepository->getList(
             $this->searchCriteriaBuilder
                 ->addFilter('order_id', $order->getEntityId())
                 ->create()
         )->getItems();
 
-        if (count($details)) {
-            $extensionAttributes->setExportDetails(reset($details));
+        if (count($exportDetailsList) > 0) {
+            $extensionAttributes->setExportDetails(reset($exportDetailsList));
         } else {
-            $extensionAttributes->setExportDetails($this->detailsFactory->create());
+            /** @var OrderExportDetailsInterface $details */
+            $exportDetails = $this->detailsFactory->create();
+            $extensionAttributes->setExportDetails($exportDetails);
         }
-
-        $order->setExtensionAttributes($extensionAttributes);
     }
 }

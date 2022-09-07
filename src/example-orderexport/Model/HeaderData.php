@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /**
- * @by SwiftOtter, Inc. 12/28/19
+ * @by SwiftOtter, Inc.
  * @website https://swiftotter.com
  **/
 
@@ -9,41 +9,31 @@ namespace SwiftOtter\OrderExport\Model;
 
 class HeaderData
 {
-    /** @var \DateTime */
+    /** @var ?\DateTime */
     private $shipDate;
 
     /** @var string */
     private $merchantNotes;
 
-    /**
-     * @return \DateTime
-     */
-    public function getShipDate(): \DateTime
+    public function getShipDate(): ?\DateTime
     {
         return $this->shipDate;
     }
 
-    /**
-     * @param \DateTime $shipDate
-     */
-    public function setShipDate(\DateTime $shipDate): void
+    public function setShipDate(\DateTime $shipDate): HeaderData
     {
         $this->shipDate = $shipDate;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getMerchantNotes(): string
     {
-        return (string)$this->merchantNotes;
+        return (string) $this->merchantNotes;
     }
 
-    /**
-     * @param string $merchantNotes
-     */
-    public function setMerchantNotes(string $merchantNotes): void
+    public function setMerchantNotes(string $merchantNotes): HeaderData
     {
         $this->merchantNotes = $merchantNotes;
+        return $this;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /**
- * @by SwiftOtter, Inc. 12/31/19
+ * @by SwiftOtter, Inc.
  * @website https://swiftotter.com
  **/
 
@@ -11,21 +11,25 @@ interface OrderExportDetailsInterface
 {
     public function getId();
 
-    public function getOrderId(): int;
+    public function getOrderId(): ?int;
 
-    public function setOrderId(int $orderId): void;
+    public function setOrderId(int $orderId): OrderExportDetailsInterface;
 
-    public function getShipOn(): \DateTime;
+    public function getShipOn(): ?\DateTime;
 
-    public function setShipOn(\DateTime $shipOn): void;
-
-    public function getExportedAt(): \DateTime;
-
-    public function setExportedAt(\DateTime $exportedAt): void;
+    public function setShipOn(\DateTime $shipOn): OrderExportDetailsInterface;
 
     public function getMerchantNotes(): string;
 
-    public function setMerchantNotes(string $merchantNotes): void;
+    public function setMerchantNotes(string $merchantNotes): OrderExportDetailsInterface;
+
+    public function getExportedAt(): ?\DateTime;
+
+    public function setExportedAt(\DateTime $exportedAt): OrderExportDetailsInterface;
 
     public function hasBeenExported(): bool;
+
+    public function getArchived(): bool;
+
+    public function setArchived(bool $archived): OrderExportDetailsInterface;
 }

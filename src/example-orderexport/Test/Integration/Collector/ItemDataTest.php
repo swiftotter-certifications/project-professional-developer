@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /**
- * @by SwiftOtter, Inc. 12/31/19
+ * @by SwiftOtter, Inc.
  * @website https://swiftotter.com
  **/
 
@@ -10,7 +10,7 @@ namespace SwiftOtter\OrderExport\Test\Integration\Collector;
 use Magento\Sales\Model\Order;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
-use SwiftOtter\OrderExport\Collector\ItemData;
+use SwiftOtter\OrderExport\Action\OrderDataCollector\ItemData;
 use SwiftOtter\OrderExport\Model\HeaderData as HeaderDataModel;
 
 class ItemDataTest extends TestCase

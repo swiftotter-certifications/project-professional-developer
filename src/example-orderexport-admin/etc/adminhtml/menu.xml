@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="SwiftOtter_OrderExportAdmin::order_export" title="Order Export" translate="title"
+             module="SwiftOtter_OrderExportAdmin" sortOrder="11" parent="Magento_Sales::sales" action="orderexport/index/index"
+             resource="SwiftOtter_OrderExportAdmin::OrderExport" />
+    </menu>
+</config>

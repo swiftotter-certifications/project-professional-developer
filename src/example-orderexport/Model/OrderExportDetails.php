@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /**
- * @by SwiftOtter, Inc. 12/31/19
+ * @by SwiftOtter, Inc.
  * @website https://swiftotter.com
  **/
 
@@ -17,39 +17,27 @@ class OrderExportDetails extends AbstractModel implements OrderExportDetailsInte
         $this->_init(\SwiftOtter\OrderExport\Model\ResourceModel\OrderExportDetails::class);
     }
 
-    public function getOrderId(): int
+    public function getOrderId(): ?int
     {
-        return (int)$this->getData('order_id');
+        return ($this->hasData('order_id')) ? (int) $this->getData('order_id') : null;
     }
 
-    public function setOrderId(int $orderId): void
+    public function setOrderId(int $orderId): OrderExportDetailsInterface
     {
         $this->setData('order_id', $orderId);
+        return $this;
     }
 
-    public function getShipOn(): \DateTime
+    public function getShipOn(): ?\DateTime
     {
-        return new \DateTime($this->getData('ship_on'));
+        $dateStr = $this->getData('ship_on');
+        return ($dateStr) ? new \DateTime($dateStr) : null;
     }
 
-    public function setShipOn(\DateTime $shipOn): void
+    public function setShipOn(\DateTime $shipOn): OrderExportDetailsInterface
     {
         $this->setData('ship_on', $shipOn);
-    }
-
-    public function getExportedAt(): \DateTime
-    {
-        return new \DateTime($this->getData('exported_at'));
-    }
-
-    public function setExportedAt(\DateTime $exportedAt): void
-    {
-        $this->setData('exported_at', $exportedAt);
-    }
-
-    public function hasBeenExported(): bool
-    {
-        return (bool)$this->getData('exported_at');
+        return $this;
     }
 
     public function getMerchantNotes(): string
@@ -57,8 +45,37 @@ class OrderExportDetails extends AbstractModel implements OrderExportDetailsInte
         return (string)$this->getData('merchant_notes');
     }
 
-    public function setMerchantNotes(string $merchantNotes): void
+    public function setMerchantNotes(string $merchantNotes): OrderExportDetailsInterface
     {
         $this->setData('merchant_notes', $merchantNotes);
+        return $this;
+    }
+
+    public function getExportedAt(): ?\DateTime
+    {
+        $dateStr = $this->getData('exported_at');
+        return ($dateStr) ? new \DateTime($dateStr) : null;
+    }
+
+    public function setExportedAt(\DateTime $exportedAt): OrderExportDetailsInterface
+    {
+        $this->setData('exported_at', $exportedAt);
+        return $this;
+    }
+
+    public function hasBeenExported(): bool
+    {
+        return (bool)$this->getData('exported_at');
+    }
+
+    public function getArchived(): bool
+    {
+        return (bool)$this->getData('archived');
+    }
+
+    public function setArchived(bool $archived): OrderExportDetailsInterface
+    {
+        $this->setData('archived', ($archived) ? 1 : 0);
+        return $this;
     }
 }
