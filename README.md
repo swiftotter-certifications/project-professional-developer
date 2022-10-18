@@ -3,6 +3,10 @@
 The code in this project is meant to be used with the SwiftOtter training course for Adobe Certified Professional -
 Adobe Commerce Developer AD0-E711.
 
+## Compatibility
+
+This project has been specifically tested on **Magento Open Source 2.4.3**.
+
 ## Installation
 
 This project is meant to be used with an _existing_ Magento installation.
