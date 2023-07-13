@@ -15,13 +15,13 @@ In your Magento root directory, create a `training-modules` directory and clone 
 `training-modules/professional-developer-project`:
 
 ```
-git clone git@github.com:swiftotter-certifications/professional-developer-project.git training-modules/professional-developer-project
+git clone git@github.com:swiftotter-certifications/project-professional-developer.git training-modules/project-professional-developer
 ```
 
 Then set up a local Composer repository:
 
 ```
-composer config repositories.training-pro-dev '{"type": "path", "url": "training-modules/professional-developer-project/src/*", "options": {"symlink": true}}'
+composer config repositories.training-pro-dev '{"type": "path", "url": "training-modules/project-professional-developer/src/*", "options": {"symlink": true}}'
 ```
 
 ## Example modules
